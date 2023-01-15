@@ -1,15 +1,10 @@
+import { getNewCurrencyRates } from "api/rateService";
 import axios from "axios";
 import {
   GET_CURRENCY_RATES_FAILURE,
   GET_CURRENCY_RATES_STARTED,
   GET_CURRENCY_RATES_SUCCESS,
 } from "constants/actionTypes";
-import {
-  API_KEY,
-  BASE_CURRENCY,
-  REQUSTED_SIMBOLS,
-  URL,
-} from "constants/rateService";
 
 export const getCurrencyRates = () => (dispatch: Function) => {
   dispatch(getCurrencyRatesStarted());
@@ -37,16 +32,7 @@ export const getCurrencyRates = () => (dispatch: Function) => {
     );
   }, 1000);
 
-  // axios(
-  //   `${URL}/fixer/latest?base=${BASE_CURRENCY}` +
-  //     `&symbols=${REQUSTED_SIMBOLS},`,
-  //   {
-  //     method: "GET",
-  //     headers: {
-  //       apikey: API_KEY,
-  //     },
-  //   }
-  // )
+  // getNewCurrencyRates()
   //   .then((response) => dispatch(getCurrencyRatesSuccess(response.data)))
   //   .catch((err) => dispatch(getCurrencyRatesFailure(err)));
 };

@@ -6,12 +6,15 @@ import CurrencyHeader from "./views/CurrencyHeader";
 import CurrencyCounter from "./views/CurrencyCounter";
 import { ICurrencyCounterItems } from "models";
 import CurrencyTable from "./views/CurrencyTable";
-import { TEST_DATA } from "./views/CurrencyTable/constants";
+
+import { ICurrencyTableRecord } from "models";
 
 import "./IndexPage.scss";
 import { getCurrencyRates } from "actions/currencies";
 
-interface StateProps {}
+interface StateProps {
+  table: ICurrencyTableRecord[];
+}
 
 interface DispatchProps {
   onGetCurrencies: Function;
@@ -22,7 +25,9 @@ interface OwnProps {}
 type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
-  return {};
+  return {
+    table: store.currencies.table,
+  };
 }
 
 function mapDispatchToProps() {
@@ -33,7 +38,7 @@ function mapDispatchToProps() {
 
 function IndexPage(props: Props): JSX.Element {
   const bem = useBem("IndexPage");
-  const { onGetCurrencies } = props;
+  const { table, onGetCurrencies } = props;
 
   const currentdate = new Date();
   const datetime =
@@ -71,7 +76,7 @@ function IndexPage(props: Props): JSX.Element {
         onUpdateCurrency={handleGetCurrencies}
       />
       {/* <CurrencyCounter items={items} onChange={() => console.log("updated")} /> */}
-      <CurrencyTable items={TEST_DATA} />
+      <CurrencyTable items={table} />
     </div>
   );
 }

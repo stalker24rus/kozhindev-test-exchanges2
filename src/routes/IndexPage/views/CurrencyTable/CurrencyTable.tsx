@@ -36,7 +36,7 @@ function CurrencyTable({ items }: ICurrencyTableProps): JSX.Element {
   useEffect(() => {
     const newData = expand ? items : items.slice(0, MIN_ROW_NUMBER_FOR_VIEW);
     setData(newData);
-  }, [expand]);
+  }, [expand, items]);
 
   const handleExpand = () => {
     setExpand((prev) => !prev);

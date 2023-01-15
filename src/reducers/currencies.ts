@@ -3,6 +3,7 @@ import {
   GET_CURRENCY_RATES_STARTED,
   GET_CURRENCY_RATES_SUCCESS,
 } from "constants/actionTypes";
+import createTable from "utils/createTable";
 
 const defaultState = () => {
   return {
@@ -16,23 +17,28 @@ const defaultState = () => {
         currency: { id: 0, label: "Доллар США" },
       },
     ],
-    table: {},
+    table: [],
+    LastUpdateDateTime: "",
+    loading: false,
+    fault: false,
   };
 };
 
 export default (state = defaultState(), action: any) => {
   switch (action.type) {
     case GET_CURRENCY_RATES_STARTED: {
-      return state;
+      console.log(GET_CURRENCY_RATES_STARTED);
+      return { ...state, loading: true };
     }
     case GET_CURRENCY_RATES_SUCCESS: {
-      console.log(action.payload);
-      return state;
+      const { rates } = action.payload;
+      const title = ["RUB", "USD", "EUR", "CNY"];
+      const table = createTable(title, rates);
+      return { ...state, table, loading: false };
     }
 
     case GET_CURRENCY_RATES_FAILURE: {
-      console.log(action.payload);
-      return state;
+      return { ...state, loading: false, fault: true };
     }
 
     default:

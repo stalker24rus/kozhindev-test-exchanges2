@@ -1,8 +1,7 @@
-import convertCurrency from "./convertCurrency";
-
 export default function getRateRow(
-  titles: string[],
+  baseCode: string,
   baseRate: number,
+  titles: string[],
   rates: { [key: string]: number }
 ): { [key: string]: number } | undefined {
   const result = {};
@@ -11,7 +10,8 @@ export default function getRateRow(
     const name = titles[i];
 
     if (rates[name] !== undefined) {
-      result[name] = convertCurrency(1, baseRate, rates[name]);
+      result[name] =
+        baseCode !== name ? (rates[name] / baseRate).toFixed(5) : 1;
     }
   }
   return result;

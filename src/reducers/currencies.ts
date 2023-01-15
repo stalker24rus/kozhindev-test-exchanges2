@@ -26,12 +26,7 @@ export default (state = defaultState(), action: any) => {
       return state;
     }
     case GET_CURRENCY_RATES_SUCCESS: {
-      console.log("GET_CURRENCY_RATES_SUCCESS");
-      // const { base, rates } = action.payload;
-      // const titles = ["RUB", "EUR", "USD", "CNY"];
-      // const tableData = getTableData(titles, rates);
-      // console.log(tableData);
-
+      console.log(action.payload);
       return state;
     }
 

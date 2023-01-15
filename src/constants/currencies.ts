@@ -1,9 +1,8 @@
 import { ICurrencyRecord, IDropDownOption } from "models";
 
 export const MIN_ROW_NUMBER_FOR_VIEW = 5;
-export const DEFAULT_CURENCY_LANGUAGES = "ruRU";
 
-export const COLUMNS = [
+export const CURRENCY_TABLE_COLUMNS = [
   {
     Header: "Код валюты (ISO 4217)",
     accessor: "id",
@@ -30,65 +29,55 @@ export const COLUMNS = [
   },
 ];
 
-export const CURRENCY_OBJECT_LIST: ICurrencyRecord[] = [
+export const CURRENCY_LIST: ICurrencyRecord[] = [
   {
-    id: "643",
-    code: "RUB",
-    ruRU: "Российский рубль",
+    id: "RUB",
+    label: "Российский рубль",
   },
   {
-    id: "978",
-    code: "EUR",
-    ruRU: "Евро",
+    id: "EUR",
+    label: "Евро",
   },
   {
-    id: "840",
-    code: "USD",
-    ruRU: "Доллар США",
+    id: "USD",
+    label: "Доллар США",
   },
   {
-    id: "156",
-    code: "CNY",
-    ruRU: "Китайский юань",
+    id: "CNY",
+    label: "Китайский юань",
   },
   {
-    id: "784",
-    code: "AED",
-    ruRU: "Дирхам",
+    id: "AED",
+    label: "Дирхам",
   },
   {
-    id: "980",
-    code: "UAH",
-    ruRU: "Гривна",
+    id: "UAH",
+    label: "Гривна",
   },
   {
-    id: "392",
-    code: "JPY",
-    ruRU: "Йена",
+    id: "JPY",
+    label: "Йена",
   },
   {
-    id: "826",
-    code: "GBP",
-    ruRU: "Фунт Стерлингов",
+    id: "GBP",
+    label: "Фунт Стерлингов",
   },
   {
-    id: "356",
-    code: "INR",
-    ruRU: "Индийская рупия",
+    id: "INR",
+    label: "Индийская рупия",
   },
   {
-    id: "051",
-    code: "AMD",
-    ruRU: "Драхм",
+    id: "AMD",
+    label: "Драхм",
   },
   {
-    id: "764",
-    code: "THB",
-    ruRU: "Бат",
+    id: "THB",
+    label: "Бат",
   },
   {
-    id: "949",
-    code: "TRY",
-    ruRU: "Турецкая лира",
+    id: "TRY",
+    label: "Турецкая лира",
   },
 ];
+
+// export const CURRENCY_OBJECT = CURRENCY_LIST.map(item);

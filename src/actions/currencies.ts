@@ -9,7 +9,7 @@ import {
   BASE_CURRENCY,
   REQUSTED_SIMBOLS,
   URL,
-} from "constants/currencyRateService";
+} from "constants/rateService";
 
 export const getCurrencyRates = () => (dispatch: Function) => {
   dispatch(getCurrencyRatesStarted());

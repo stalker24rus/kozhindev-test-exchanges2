@@ -1,17 +1,30 @@
-import { createStore, applyMiddleware, combineReducers, compose } from "redux";
-import thunk from "redux-thunk";
-import reduxLogger from "redux-logger";
-import { rootReducers } from "./reducer";
+import { combineReducers } from "redux";
+import {
+  form,
+  auth,
+  fields,
+  list,
+  notifications,
+  modal,
+  router,
+  screen,
+} from "@steroidsjs/core/reducers";
+import currencies from "./currencies";
 
-const configureStore = (reducers = {}, preLoadedState = {}, midlewares = []) =>
-  createStore(
-    combineReducers({ ...rootReducers, ...reducers }),
-    preLoadedState,
-    compose(
-      applyMiddleware(...midlewares, thunk, reduxLogger), //reduxLogger
-      window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        window.__REDUX_DEVTOOLS_EXTENSION__()
-    )
-  );
-
-export const store = configureStore();
+export default (asyncReducers) =>
+  combineReducers({
+    form,
+    auth,
+    fields,
+    list,
+    notifications,
+    modal,
+    screen,
+    currencies,
+    ...asyncReducers,
+    router: (state, action) =>
+      router(
+        asyncReducers.router ? asyncReducers.router(state, action) : {},
+        action
+      ),
+  });

@@ -3,7 +3,6 @@ import {
   GET_CURRENCY_RATES_STARTED,
   GET_CURRENCY_RATES_SUCCESS,
 } from "constants/actionTypes";
-import { getTableData } from "./api/getTableData";
 
 const defaultState = () => {
   return {
@@ -21,7 +20,7 @@ const defaultState = () => {
   };
 };
 
-const currencies = (state = defaultState(), action: any) => {
+export default (state = defaultState(), action: any) => {
   switch (action.type) {
     case GET_CURRENCY_RATES_STARTED: {
       return state;
@@ -45,5 +44,3 @@ const currencies = (state = defaultState(), action: any) => {
       return state;
   }
 };
-
-export default currencies;

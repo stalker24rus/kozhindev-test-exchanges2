@@ -54,6 +54,5 @@ export interface INumberFieldProps {
 
 export interface ICurrencyRecord {
   id: string;
-  code: string;
-  ruRU: string;
+  label: string;
 }

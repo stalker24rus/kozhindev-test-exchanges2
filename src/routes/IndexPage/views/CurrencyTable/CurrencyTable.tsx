@@ -5,7 +5,10 @@ import Button from "@steroidsjs/core/ui/form/Button/Button";
 import { useTable, useGlobalFilter } from "react-table";
 
 import { ICurrencyTableProps } from "models";
-import { COLUMNS, MIN_ROW_NUMBER_FOR_VIEW } from "constants/currencies";
+import {
+  CURRENCY_TABLE_COLUMNS,
+  MIN_ROW_NUMBER_FOR_VIEW,
+} from "constants/currencies";
 
 import "./CurrencyTable.scss";
 
@@ -14,7 +17,9 @@ function CurrencyTable({ items }: ICurrencyTableProps): JSX.Element {
   const [data, setData] = useState(items);
   const [expand, setExpand] = useState(false);
 
-  const columns = useMemo(() => COLUMNS, [COLUMNS]);
+  const columns = useMemo(() => CURRENCY_TABLE_COLUMNS, [
+    CURRENCY_TABLE_COLUMNS,
+  ]);
 
   const {
     getTableProps,

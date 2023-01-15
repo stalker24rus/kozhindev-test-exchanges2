@@ -13,26 +13,29 @@ import {
 
 export const getCurrencyRates = () => (dispatch: Function) => {
   dispatch(getCurrencyRatesStarted());
-  dispatch(
-    getCurrencyRatesSuccess({
-      base: "USD",
-      date: "2023-01-15",
-      rates: {
-        AED: 3.673042,
-        AMD: 394.672074,
-        CNY: 6.702904,
-        EUR: 0.92185,
-        GBP: 0.817595,
-        INR: 81.285504,
-        JPY: 127.88504,
-        RUB: 66.000341,
-        THB: 32.844038,
-        TRY: 18.803504,
-        UAH: 36.621376,
-        USD: 1,
-      },
-    })
-  );
+
+  setTimeout(() => {
+    dispatch(
+      getCurrencyRatesSuccess({
+        base: "USD",
+        date: "2023-01-15",
+        rates: {
+          AED: 3.673042,
+          AMD: 394.672074,
+          CNY: 6.702904,
+          EUR: 0.92185,
+          GBP: 0.817595,
+          INR: 81.285504,
+          JPY: 127.88504,
+          RUB: 66.000341,
+          THB: 32.844038,
+          TRY: 18.803504,
+          UAH: 36.621376,
+          USD: 1,
+        },
+      })
+    );
+  }, 1000);
 
   // axios(
   //   `${URL}/fixer/latest?base=${BASE_CURRENCY}` +

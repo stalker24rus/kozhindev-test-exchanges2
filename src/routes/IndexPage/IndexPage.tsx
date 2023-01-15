@@ -11,9 +11,11 @@ import { ICurrencyTableRecord } from "models";
 
 import "./IndexPage.scss";
 import { getCurrencyRates } from "actions/currencies";
+import LoadingRing from "ui/LoadingRing";
 
 interface StateProps {
   table: ICurrencyTableRecord[];
+  loading: boolean;
 }
 
 interface DispatchProps {
@@ -27,6 +29,7 @@ type Props = StateProps & DispatchProps & OwnProps;
 function mapStateToProps(store) {
   return {
     table: store.currencies.table,
+    loading: store.currencies.loading,
   };
 }
 
@@ -38,7 +41,7 @@ function mapDispatchToProps() {
 
 function IndexPage(props: Props): JSX.Element {
   const bem = useBem("IndexPage");
-  const { table, onGetCurrencies } = props;
+  const { table, loading, onGetCurrencies } = props;
 
   const currentdate = new Date();
   const datetime =
@@ -77,6 +80,7 @@ function IndexPage(props: Props): JSX.Element {
       />
       {/* <CurrencyCounter items={items} onChange={() => console.log("updated")} /> */}
       <CurrencyTable items={table} />
+      {loading && <LoadingRing />}
     </div>
   );
 }

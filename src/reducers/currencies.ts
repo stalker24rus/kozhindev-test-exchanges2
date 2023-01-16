@@ -10,12 +10,12 @@ const defaultState = () => {
   return {
     converter: {
       firstField: {
-        value: 0,
-        currency: undefined,
+        value: 1,
+        currency: "RUB",
       },
       secondField: {
-        value: 0,
-        currency: undefined,
+        value: 1,
+        currency: "USD",
       },
     },
     table: [],
@@ -34,7 +34,7 @@ export default (state = defaultState(), action: any) => {
     case GET_CURRENCY_RATES_SUCCESS: {
       const { rates } = action.payload;
       const title = ["RUB", "USD", "EUR", "CNY"];
-      const table = createTable(title, rates);
+      const table = createTable(title, rates) || [];
       return { ...state, table, loading: false, lastUpdateDT: new Date() };
     }
 

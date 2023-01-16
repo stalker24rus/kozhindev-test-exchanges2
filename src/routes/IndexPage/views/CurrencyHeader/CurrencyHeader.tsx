@@ -12,9 +12,10 @@ export default function CurrencyHeader(): JSX.Element {
   const dateTime = useSelector(getLastUpdateDT);
   const dispatch = useDispatch();
 
-  const handleUpdateCurrency = () => {
+  const handleUpdateCurrency = React.useCallback(() => {
     dispatch(getCurrencyRates());
-  };
+  }, [dispatch]);
+
   return (
     <div className={bem.block()}>
       <div className={bem.element("title")}>

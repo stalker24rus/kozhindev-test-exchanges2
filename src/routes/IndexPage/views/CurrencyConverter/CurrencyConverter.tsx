@@ -18,21 +18,51 @@ export default function CurrencyConverter(): JSX.Element {
   return (
     <div className={bem.block()}>
       <div className={bem.element("item")}>
-        <div className={bem.element("number-field")}>
-          <NumberField value={firstField.value} />
+        <div className={bem.element("number-field")} onChange={handleOnChange}>
+          <NumberField
+            label="firstField.value"
+            value={firstField.value}
+            inputProps={{
+              name: "firstField.value",
+              onclick: handleOnChange,
+            }}
+          />
         </div>
 
         <div className={bem.element("drop-down-field")}>
-          <DropDownField value={firstField.currency} items={CURRENCY_LIST} />
+          <DropDownField
+            label="firstField.currency"
+            value={firstField.currency}
+            items={CURRENCY_LIST}
+            inputProps={{
+              name: "firstField.currency",
+            }}
+            onChange={handleOnChange}
+          />
         </div>
       </div>
 
       <div className={bem.element("item")}>
         <div className={bem.element("number-field")}>
-          <NumberField value={secondField.value} />
+          <NumberField
+            label="secondField.value"
+            value={secondField.value}
+            inputProps={{
+              name: "secondField.value",
+              onclick: handleOnChange,
+            }}
+          />
         </div>
         <div className={bem.element("drop-down-field")}>
-          <DropDownField value={secondField.currency} items={CURRENCY_LIST} />
+          <DropDownField
+            label="secondField.currency"
+            value={secondField.currency}
+            items={CURRENCY_LIST}
+            inputProps={{
+              name: "secondField.currency",
+            }}
+            onChange={handleOnChange}
+          />
         </div>
       </div>
     </div>

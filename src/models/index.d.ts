@@ -1,12 +1,3 @@
-export interface ICurrencyCounterProps {
-  items: ICurrencyCounterItems;
-  onChange: Function;
-}
-
-export interface ICurrencyTableProps {
-  items: ICurrencyTableRecord[];
-}
-
 export interface ICurrencyTableRecord {
   code: string;
   name: string;
@@ -14,11 +5,6 @@ export interface ICurrencyTableRecord {
   usaExchangeRate: number;
   euroExchangeRate: number;
   yuanExchangeRate: number;
-}
-
-export interface ICurrencyHeaderProps {
-  currencyDateTime: string;
-  onUpdateCurrency: Function;
 }
 
 export interface ICurrencyCounterItems {

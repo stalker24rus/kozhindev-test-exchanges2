@@ -1,91 +1,41 @@
 import * as React from "react";
-import { connect } from "react-redux";
+import { useBem, useSelector } from "@steroidsjs/core/hooks";
+import useDispatch from "@steroidsjs/core/hooks/useDispatch";
 
-import { useBem } from "@steroidsjs/core/hooks";
 import CurrencyHeader from "./views/CurrencyHeader";
-import CurrencyCounter from "./views/CurrencyCounter";
-import { ICurrencyCounterItems } from "models";
 import CurrencyTable from "./views/CurrencyTable";
 
-import { ICurrencyTableRecord } from "models";
-
-import "./IndexPage.scss";
 import { getCurrencyRates } from "actions/currencies";
+import { getLoadingState } from "reducers/currencies";
 import LoadingRing from "ui/LoadingRing";
 
-interface StateProps {
-  table: ICurrencyTableRecord[];
-  loading: boolean;
-}
+import CurrencyConverter from "./views/CurrencyConverter";
 
-interface DispatchProps {
-  onGetCurrencies: Function;
-}
+import "./IndexPage.scss";
 
-interface OwnProps {}
-
-type Props = StateProps & DispatchProps & OwnProps;
-
-function mapStateToProps(store) {
-  return {
-    table: store.currencies.table,
-    loading: store.currencies.loading,
-  };
-}
-
-function mapDispatchToProps() {
-  return {
-    onGetCurrencies: getCurrencyRates,
-  };
-}
-
-function IndexPage(props: Props): JSX.Element {
+function IndexPage(): JSX.Element {
   const bem = useBem("IndexPage");
-  const { table, loading, onGetCurrencies } = props;
+  const dispatch = useDispatch();
 
-  const currentdate = new Date();
-  const datetime =
-    currentdate.getDate() +
-    "." +
-    (currentdate.getMonth() + 1) +
-    "." +
-    currentdate.getFullYear() +
-    " " +
-    currentdate.getHours() +
-    ":" +
-    currentdate.getMinutes() +
-    ":" +
-    currentdate.getSeconds();
+  const [firstRender, setFirstRender] = React.useState(true);
 
-  const items = {
-    first: {
-      value: 1.63463,
-      currency: { id: 0, label: "Российский рубль" },
-    },
-    second: {
-      value: 0.1012,
-      currency: { id: 0, label: "Доллар США" },
-    },
-  };
+  const loading = useSelector(getLoadingState);
 
-  const handleGetCurrencies = () => {
-    onGetCurrencies();
-  };
+  React.useEffect(() => {
+    if (firstRender) {
+      dispatch(getCurrencyRates());
+      setFirstRender(false);
+    }
+  }, [firstRender]);
 
   return (
     <div className={bem.block()}>
-      <CurrencyHeader
-        currencyDateTime={datetime}
-        onUpdateCurrency={handleGetCurrencies}
-      />
-      {/* <CurrencyCounter items={items} onChange={() => console.log("updated")} /> */}
-      <CurrencyTable items={table} />
+      <CurrencyHeader />
+      <CurrencyConverter />
+      <CurrencyTable />
       {loading && <LoadingRing />}
     </div>
   );
 }
 
-export default connect<StateProps, DispatchProps, OwnProps>(
-  mapStateToProps,
-  mapDispatchToProps()
-)(IndexPage);
+export default IndexPage;

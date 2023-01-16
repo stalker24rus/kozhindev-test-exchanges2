@@ -1,21 +1,21 @@
-import React, { memo, useEffect, useMemo, useState } from "react";
-import { useBem } from "@steroidsjs/core/hooks";
-import Button from "@steroidsjs/core/ui/form/Button/Button";
-
+import React, { useEffect, useMemo, useState } from "react";
 import { useTable, useGlobalFilter } from "react-table";
-
-import { ICurrencyTableProps } from "models";
+import { useBem, useSelector } from "@steroidsjs/core/hooks";
+import Button from "@steroidsjs/core/ui/form/Button/Button";
 import {
   CURRENCY_TABLE_COLUMNS,
   MIN_ROW_NUMBER_FOR_VIEW,
 } from "constants/currencies";
+import { getCurrencyTable } from "reducers/currencies";
 
 import "./CurrencyTable.scss";
 
-function CurrencyTable({ items }: ICurrencyTableProps): JSX.Element {
+function CurrencyTable(): JSX.Element {
   const bem = useBem("CurrencyTable");
-  const [data, setData] = useState(items);
+  const tableData = useSelector(getCurrencyTable);
+
   const [expand, setExpand] = useState(false);
+  const [data, setData] = useState(tableData);
 
   const columns = useMemo(() => CURRENCY_TABLE_COLUMNS, [
     CURRENCY_TABLE_COLUMNS,
@@ -34,9 +34,11 @@ function CurrencyTable({ items }: ICurrencyTableProps): JSX.Element {
   const { globalFilter } = state;
 
   useEffect(() => {
-    const newData = expand ? items : items.slice(0, MIN_ROW_NUMBER_FOR_VIEW);
+    const newData = expand
+      ? tableData
+      : tableData.slice(0, MIN_ROW_NUMBER_FOR_VIEW);
     setData(newData);
-  }, [expand, items]);
+  }, [expand, tableData]);
 
   const handleExpand = () => {
     setExpand((prev) => !prev);

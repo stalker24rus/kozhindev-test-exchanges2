@@ -1,5 +1,4 @@
 import { getNewCurrencyRates } from "api/rateService";
-import axios from "axios";
 import {
   GET_CURRENCY_RATES_FAILURE,
   GET_CURRENCY_RATES_STARTED,

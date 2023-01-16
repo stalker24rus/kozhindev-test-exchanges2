@@ -3,22 +3,23 @@ import {
   GET_CURRENCY_RATES_STARTED,
   GET_CURRENCY_RATES_SUCCESS,
 } from "constants/actionTypes";
+import { RootState } from "reducers";
 import createTable from "utils/createTable";
 
 const defaultState = () => {
   return {
-    calculator: [
-      {
-        value: 1.63463,
-        currency: { id: 0, label: "Российский рубль" },
+    converter: {
+      firstField: {
+        value: 0,
+        currency: undefined,
       },
-      {
-        value: 0.1012,
-        currency: { id: 0, label: "Доллар США" },
+      secondField: {
+        value: 0,
+        currency: undefined,
       },
-    ],
+    },
     table: [],
-    LastUpdateDateTime: "",
+    lastUpdateDT: undefined,
     loading: false,
     fault: false,
   };
@@ -34,7 +35,7 @@ export default (state = defaultState(), action: any) => {
       const { rates } = action.payload;
       const title = ["RUB", "USD", "EUR", "CNY"];
       const table = createTable(title, rates);
-      return { ...state, table, loading: false };
+      return { ...state, table, loading: false, lastUpdateDT: new Date() };
     }
 
     case GET_CURRENCY_RATES_FAILURE: {
@@ -45,3 +46,13 @@ export default (state = defaultState(), action: any) => {
       return state;
   }
 };
+
+export const getLastUpdateDT = (state: RootState) =>
+  state.currencies.lastUpdateDT?.toLocaleString();
+
+export const getCurrencyTable = (state: RootState) => state.currencies.table;
+
+export const getConverterData = (state: RootState) =>
+  state.currencies.converter;
+
+export const getLoadingState = (state: RootState) => state.currencies.loading;

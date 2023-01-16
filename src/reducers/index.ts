@@ -11,6 +11,10 @@ import {
 } from "@steroidsjs/core/reducers";
 import currencies from "./currencies";
 
+const projectReducers = combineReducers({
+  currencies,
+});
+
 export default (asyncReducers) =>
   combineReducers({
     form,
@@ -28,3 +32,5 @@ export default (asyncReducers) =>
         action
       ),
   });
+
+export type RootState = ReturnType<typeof projectReducers>;

@@ -1,43 +1,47 @@
 import React from "react";
-import { useBem, useSelector } from "@steroidsjs/core/hooks";
+import { useBem, useDispatch, useSelector } from "@steroidsjs/core/hooks";
 import NumberField from "@steroidsjs/core/ui/form/NumberField";
 import DropDownField from "@steroidsjs/core/ui/form/DropDownField";
 import { CURRENCY_LIST } from "constants/currencies";
 import { getConverterData } from "reducers/currencies";
+import { setCurrencyConverterData } from "actions/currencies";
 
 import "./CurrencyConverter.scss";
 
 export default function CurrencyConverter(): JSX.Element {
   const bem = useBem("CurrencyCounter");
   const { firstField, secondField } = useSelector(getConverterData);
+  const dispatch = useDispatch();
 
-  const handleOnChange = (ev) => {
-    console.log(ev);
-  };
+  const bindingChange = (name: string) =>
+    React.useCallback(
+      (value: number) => {
+        const [parent, element] = name.split(".");
+
+        if (parent && element) {
+          dispatch(
+            setCurrencyConverterData({ [parent]: { [element]: value } })
+          );
+        }
+      },
+      [dispatch]
+    );
 
   return (
     <div className={bem.block()}>
       <div className={bem.element("item")}>
-        <div className={bem.element("number-field")} onChange={handleOnChange}>
+        <div className={bem.element("number-field")}>
           <NumberField
-            label="firstField.value"
             value={firstField.value}
-            inputProps={{
-              name: "firstField.value",
-              onclick: handleOnChange,
-            }}
+            onChange={bindingChange("firstField.value")}
           />
         </div>
 
         <div className={bem.element("drop-down-field")}>
           <DropDownField
-            label="firstField.currency"
             value={firstField.currency}
             items={CURRENCY_LIST}
-            inputProps={{
-              name: "firstField.currency",
-            }}
-            onChange={handleOnChange}
+            onChange={bindingChange("firstField.currency")}
           />
         </div>
       </div>
@@ -45,23 +49,15 @@ export default function CurrencyConverter(): JSX.Element {
       <div className={bem.element("item")}>
         <div className={bem.element("number-field")}>
           <NumberField
-            label="secondField.value"
             value={secondField.value}
-            inputProps={{
-              name: "secondField.value",
-              onclick: handleOnChange,
-            }}
+            onChange={bindingChange("secondField.value")}
           />
         </div>
         <div className={bem.element("drop-down-field")}>
           <DropDownField
-            label="secondField.currency"
             value={secondField.currency}
             items={CURRENCY_LIST}
-            inputProps={{
-              name: "secondField.currency",
-            }}
-            onChange={handleOnChange}
+            onChange={bindingChange("secondField.currency")}
           />
         </div>
       </div>

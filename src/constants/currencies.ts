@@ -1,5 +1,7 @@
 import { ICurrencyRecord, IDropDownOption } from "models";
 
+export const LOCALSTORAGE_CONVERTER = "currenciesConverter";
+
 export const MIN_ROW_NUMBER_FOR_VIEW = 5;
 
 export const CURRENCY_TABLE_COLUMNS = [

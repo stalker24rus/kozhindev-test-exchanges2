@@ -4,4 +4,4 @@ export const GET_CURRENCY_RATES_STARTED: string = `${module}/GET_CURRENCY_RATES_
 export const GET_CURRENCY_RATES_SUCCESS: string = `${module}/GET_CURRENCY_RATES_SUCCESS`;
 export const GET_CURRENCY_RATES_FAILURE: string = `${module}/GET_CURRENCY_RATES_FAILURE`;
 
-export const RECALCULATE_CURRENCIES_RATE: string = `${module}/RECALCULATE_CURRENCIES_RATE`;
+export const SET_CURRENCY_CONVERTER_DATA: string = `${module}/SET_CURRENCY_CONVERTER_DATA`;

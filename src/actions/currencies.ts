@@ -3,6 +3,7 @@ import {
   GET_CURRENCY_RATES_FAILURE,
   GET_CURRENCY_RATES_STARTED,
   GET_CURRENCY_RATES_SUCCESS,
+  SET_CURRENCY_CONVERTER_DATA,
 } from "constants/actionTypes";
 
 export const getCurrencyRates = () => (dispatch: Function) => {
@@ -50,4 +51,9 @@ const getCurrencyRatesSuccess = (result) => ({
 const getCurrencyRatesFailure = (error) => ({
   type: GET_CURRENCY_RATES_FAILURE,
   payload: error,
+});
+
+export const setCurrencyConverterData = (data) => ({
+  type: SET_CURRENCY_CONVERTER_DATA,
+  payload: { data },
 });

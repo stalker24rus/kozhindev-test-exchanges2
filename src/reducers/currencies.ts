@@ -8,10 +8,12 @@ import {
 import { LOCALSTORAGE_CONVERTER } from "constants/currencies";
 import { RootState } from "reducers";
 import createTable from "utils/createTable";
+import saveLocalStorage from "utils/saveLocalStorage";
+import loadLocalStorage from "utils/loadLocalStorage";
 
 const defaultState = () => {
   return {
-    converter: JSON.parse(localStorage.getItem(LOCALSTORAGE_CONVERTER)) || {
+    converter: loadLocalStorage(LOCALSTORAGE_CONVERTER) || {
       firstField: {
         value: 1,
         currency: "RUB",
@@ -50,7 +52,7 @@ export default (state = defaultState(), action: any) => {
       const converter = _.cloneDeep(state.converter);
       _.merge(converter, data);
 
-      localStorage.setItem(LOCALSTORAGE_CONVERTER, JSON.stringify(converter));
+      saveLocalStorage(LOCALSTORAGE_CONVERTER, converter);
       return { ...state, converter };
     }
 

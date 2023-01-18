@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useTable, useGlobalFilter } from "react-table";
 import { useBem, useSelector } from "@steroidsjs/core/hooks";
+import Grid from "@steroidsjs/core/ui/list/Grid";
 import Button from "@steroidsjs/core/ui/form/Button/Button";
 import {
   CURRENCY_TABLE_COLUMNS,
@@ -15,7 +16,7 @@ function CurrencyTable(): JSX.Element {
   const tableData = useSelector(getCurrencyTable);
 
   const [expand, setExpand] = useState(false);
-  const [data, setData] = useState(tableData);
+  const [items, setItems] = useState(tableData);
 
   const columns = useMemo(() => CURRENCY_TABLE_COLUMNS, [
     CURRENCY_TABLE_COLUMNS,
@@ -29,7 +30,7 @@ function CurrencyTable(): JSX.Element {
     state,
     setGlobalFilter,
     prepareRow,
-  } = useTable({ columns, data }, useGlobalFilter);
+  } = useTable({ columns, data: items }, useGlobalFilter);
 
   const { globalFilter } = state;
 
@@ -37,7 +38,7 @@ function CurrencyTable(): JSX.Element {
     const newData = expand
       ? tableData
       : tableData.slice(0, MIN_ROW_NUMBER_FOR_VIEW);
-    setData(newData);
+    setItems(newData);
   }, [expand, tableData]);
 
   const handleExpand = () => {
@@ -78,11 +79,47 @@ function CurrencyTable(): JSX.Element {
           })}
         </tbody>
       </table>
+
+      <>
+        <Grid
+          style={{ height: "300px" }}
+          listId="CurrencyTable"
+          items={items}
+          columns={columnsGrid}
+        />
+      </>
       <Button onClick={handleExpand}>
         {expand ? "Скрыть" : "Показать все"}
       </Button>
     </div>
   );
 }
+
+export const columnsGrid = [
+  {
+    label: "Код валюты (ISO 4217)",
+    attribute: "code",
+  },
+  {
+    label: "Название валюты",
+    attribute: "name",
+  },
+  {
+    label: "Курс к рублю",
+    attribute: "RUB",
+  },
+  {
+    label: "Курс к доллару",
+    attribute: "USD",
+  },
+  {
+    label: "Курс к Евро",
+    attribute: "EUR",
+  },
+  {
+    label: "Курс к Юаню",
+    attribute: "CNY",
+  },
+];
 
 export default CurrencyTable;

@@ -4,8 +4,11 @@ import calculateRow from "./getRateRow";
 
 export default function createTable(title, rates): ICurrencyTableRecord[] {
   const table = [];
+  let i = 0;
+
   for (const property in rates) {
     const temp = {
+      id: i,
       code: property,
       name:
         CURRENCY_LIST.find((element) => element.id === property)?.label ||
@@ -13,6 +16,7 @@ export default function createTable(title, rates): ICurrencyTableRecord[] {
       ...calculateRow(property, rates[property], title, rates),
     };
     table.push(temp);
+    i++;
   }
 
   return table;

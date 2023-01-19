@@ -15,39 +15,37 @@ function CurrencyTable(): JSX.Element {
   const bem = useBem("CurrencyTable");
   const tableData = useSelector(getCurrencyTable);
 
-  const [expand, setExpand] = useState(false);
+  // const [expand, setExpand] = useState(false);
   const [items, setItems] = useState(tableData);
 
-  const columns = useMemo(() => CURRENCY_TABLE_COLUMNS, [
-    CURRENCY_TABLE_COLUMNS,
-  ]);
+  // const {
+  //   getTableProps,
+  //   getTableBodyProps,
+  //   headerGroups,
+  //   rows,
+  //   state,
+  //   setGlobalFilter,
+  //   prepareRow,
+  // } = useTable({ columns, data: items }, useGlobalFilter);
 
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    state,
-    setGlobalFilter,
-    prepareRow,
-  } = useTable({ columns, data: items }, useGlobalFilter);
+  // const { globalFilter } = state;
 
-  const { globalFilter } = state;
+  // useEffect(() => {
+  //   const newData = expand
+  //     ? tableData
+  //     : tableData.slice(0, MIN_ROW_NUMBER_FOR_VIEW);
+  //   setItems(newData);
+  // }, [expand, tableData]);
 
-  useEffect(() => {
-    const newData = expand
-      ? tableData
-      : tableData.slice(0, MIN_ROW_NUMBER_FOR_VIEW);
-    setItems(newData);
-  }, [expand, tableData]);
+  // const handleExpand = () => {
+  //   setExpand((prev) => !prev);
+  // };
 
-  const handleExpand = () => {
-    setExpand((prev) => !prev);
-  };
+  console.log(items, tableData);
 
   return (
     <div className={bem.block()}>
-      <div className={bem.element("search-container")}>
+      {/* <div className={bem.element("search-container")}>
         <input
           type="text"
           value={globalFilter || ""}
@@ -78,24 +76,63 @@ function CurrencyTable(): JSX.Element {
             );
           })}
         </tbody>
-      </table>
+      </table> */}
 
       <>
+        {items.length > 0 && (
+          <Grid
+            listId={"CurrencyTable1"}
+            items={items}
+            columns={columnsBasic}
+          />
+        )}
+
         <Grid
-          style={{ height: "300px" }}
-          listId="CurrencyTable"
-          items={items}
-          columns={columnsGrid}
+          listId="GridBasicDemo"
+          items={itemsBasic}
+          columns={columnsBasic}
         />
       </>
-      <Button onClick={handleExpand}>
+      {/* <Button onClick={handleExpand}>
         {expand ? "Скрыть" : "Показать все"}
-      </Button>
+      </Button> */}
     </div>
   );
 }
 
-export const columnsGrid = [
+export default CurrencyTable;
+
+export const itemsBasic = [
+  {
+    CNY: "1.82489",
+    EUR: "0.25098",
+    RUB: "17.96885",
+    USD: "0.27225",
+    code: "AED",
+    id: 1,
+    name: "Дирхам",
+  },
+  {
+    CNY: "0.01698",
+    EUR: "0.00234",
+    RUB: "0.16723",
+    USD: "0.00253",
+    code: "AMD",
+    id: 2,
+    name: "Драхм",
+  },
+  {
+    id: 3,
+    code: "CNY",
+    name: "Китайский юань",
+    RUB: "9.84653",
+    USD: "0.14919",
+    EUR: "0.13753",
+    CNY: 1,
+  },
+];
+
+export const columnsBasic = [
   {
     label: "Код валюты (ISO 4217)",
     attribute: "code",
@@ -121,5 +158,3 @@ export const columnsGrid = [
     attribute: "CNY",
   },
 ];
-
-export default CurrencyTable;

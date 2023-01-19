@@ -8,7 +8,7 @@ export default function createTable(title, rates): ICurrencyTableRecord[] {
 
   for (const property in rates) {
     const temp = {
-      id: i,
+      id: i + 1,
       code: property,
       name:
         CURRENCY_LIST.find((element) => element.id === property)?.label ||

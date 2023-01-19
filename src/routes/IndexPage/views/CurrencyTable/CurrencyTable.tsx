@@ -15,87 +15,40 @@ function CurrencyTable(): JSX.Element {
   const bem = useBem("CurrencyTable");
   const tableData = useSelector(getCurrencyTable);
 
-  // const [expand, setExpand] = useState(false);
-  const [items, setItems] = useState(tableData);
+  const [expand, setExpand] = useState(false);
+  const [items, setItems] = useState([]);
 
-  // const {
-  //   getTableProps,
-  //   getTableBodyProps,
-  //   headerGroups,
-  //   rows,
-  //   state,
-  //   setGlobalFilter,
-  //   prepareRow,
-  // } = useTable({ columns, data: items }, useGlobalFilter);
+  useEffect(() => {
+    const newData = expand
+      ? tableData
+      : tableData.slice(0, MIN_ROW_NUMBER_FOR_VIEW);
+    setItems(newData);
+  }, [expand, tableData]);
 
-  // const { globalFilter } = state;
-
-  // useEffect(() => {
-  //   const newData = expand
-  //     ? tableData
-  //     : tableData.slice(0, MIN_ROW_NUMBER_FOR_VIEW);
-  //   setItems(newData);
-  // }, [expand, tableData]);
-
-  // const handleExpand = () => {
-  //   setExpand((prev) => !prev);
-  // };
+  const handleExpand = () => {
+    setExpand(!expand);
+  };
 
   console.log(items, tableData);
 
+  const itemsMemo = useMemo(() => items, [items]);
+  const itemWithIndex = React.useMemo(
+    () => tableData.map((item, index) => ({ ...item, index })),
+    [tableData]
+  );
+
   return (
-    <div className={bem.block()}>
-      {/* <div className={bem.element("search-container")}>
-        <input
-          type="text"
-          value={globalFilter || ""}
-          onChange={(e) => setGlobalFilter(e.target.value)}
-        />
-      </div>
-      <table className={bem.element("table")} {...getTableProps()}>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table> */}
+    <div className={bem.block()} key={tableData.length}>
+      <Grid
+        listId={"currencyTable" + tableData.length}
+        items={itemWithIndex}
+        columns={columnsBasic}
+        itemsIndexing
+      />
 
-      <>
-        {items.length > 0 && (
-          <Grid
-            listId={"CurrencyTable1"}
-            items={items}
-            columns={columnsBasic}
-          />
-        )}
-
-        <Grid
-          listId="GridBasicDemo"
-          items={itemsBasic}
-          columns={columnsBasic}
-        />
-      </>
-      {/* <Button onClick={handleExpand}>
+      <Button onClick={handleExpand}>
         {expand ? "Скрыть" : "Показать все"}
-      </Button> */}
+      </Button>
     </div>
   );
 }
@@ -158,3 +111,50 @@ export const columnsBasic = [
     attribute: "CNY",
   },
 ];
+
+// const {
+//   getTableProps,
+//   getTableBodyProps,
+//   headerGroups,
+//   rows,
+//   state,
+//   setGlobalFilter,
+//   prepareRow,
+// } = useTable({ columns, data: items }, useGlobalFilter);
+
+// const { globalFilter } = state;
+
+{
+  /* <div className={bem.element("search-container")}>
+        <input
+          type="text"
+          value={globalFilter || ""}
+          onChange={(e) => setGlobalFilter(e.target.value)}
+        />
+      </div>
+      <table className={bem.element("table")} {...getTableProps()}>
+        <thead>
+          {headerGroups.map((headerGroup) => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map((column) => (
+                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row) => {
+            prepareRow(row);
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map((cell) => {
+                  return (
+                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table> */
+}

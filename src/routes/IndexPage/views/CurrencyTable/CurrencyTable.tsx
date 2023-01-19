@@ -39,16 +39,17 @@ function CurrencyTable(): JSX.Element {
 
   return (
     <div className={bem.block()} key={tableData.length}>
-      <Grid
-        listId={"currencyTable" + tableData.length}
-        items={itemWithIndex}
-        columns={columnsBasic}
-        itemsIndexing
-      />
-
-      <Button onClick={handleExpand}>
-        {expand ? "Скрыть" : "Показать все"}
-      </Button>
+      <div className={bem.element("table")}>
+        <Grid
+          listId={"currencyTable" + tableData.length}
+          items={itemWithIndex}
+          columns={columnsBasic}
+          itemsIndexing
+        />
+        <Button onClick={handleExpand}>
+          {expand ? "Скрыть" : "Показать все"}
+        </Button>
+      </div>
     </div>
   );
 }

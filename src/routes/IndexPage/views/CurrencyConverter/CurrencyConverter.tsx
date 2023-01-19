@@ -29,6 +29,7 @@ export default function CurrencyConverter(): JSX.Element {
 
   return (
     <div className={bem.block()}>
+      <div className={bem.element("title")}>Конвертер валют</div>
       <div className={bem.element("item")}>
         <div className={bem.element("number-field")}>
           <NumberField

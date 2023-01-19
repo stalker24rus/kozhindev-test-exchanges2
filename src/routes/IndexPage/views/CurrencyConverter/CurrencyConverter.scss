@@ -1,8 +1,16 @@
 @import "style/variables";
 
 .CurrencyCounter {
-  margin-top: 30px;
-  background-color: gray;
+  // margin-top: 30px;
+  // background-color: rgb(255, 123, 0);
+  max-width: 800px;
+  margin: 0 auto;
+
+  &__title {
+    // color: white;
+    // background-color: rgb(173, 25, 25);
+    font-weight: bold;
+  }
 
   &__item {
     display: flex;

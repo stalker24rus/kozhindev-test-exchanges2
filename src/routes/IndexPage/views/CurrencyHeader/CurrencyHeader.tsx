@@ -19,11 +19,11 @@ export default function CurrencyHeader(): JSX.Element {
   return (
     <div className={bem.block()}>
       <div className={bem.element("title")}>
-        Курсы валют на
-        <span className={bem.element("date-time")}>{dateTime}</span>
-      </div>
-      <div className={bem.element("update-button")}>
-        <Button onClick={handleUpdateCurrency}>Обновить</Button>
+        <div className={bem.element("text")}>Курсы валют на</div>
+        <div className={bem.element("date-time")}>{dateTime}</div>
+        <div className={bem.element("update-button")}>
+          <Button onClick={handleUpdateCurrency}>Обновить</Button>
+        </div>
       </div>
     </div>
   );

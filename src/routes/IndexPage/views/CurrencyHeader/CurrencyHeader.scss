@@ -5,8 +5,17 @@
   background-color: black;
 
   &__title {
+    display: flex;
     margin: 15px;
     color: white;
+    font-weight: bold;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  &__text {
+    margin: 15px;
+    text-align: left;
   }
 
   &__date-time {
@@ -15,6 +24,7 @@
   }
 
   &__update-button {
+    right: 0;
     margin: 10px;
   }
 }

@@ -18,30 +18,24 @@ function CurrencyTable(): JSX.Element {
   const [expand, setExpand] = useState(false);
   const [items, setItems] = useState([]);
 
-  useEffect(() => {
+  const handleExpand = React.useCallback(() => {
     const newData = expand
       ? tableData
       : tableData.slice(0, MIN_ROW_NUMBER_FOR_VIEW);
-    setItems(newData);
-  }, [expand, tableData]);
-
-  const handleExpand = () => {
+    setItems([...newData]);
     setExpand(!expand);
-  };
+  }, [tableData, items.length]);
 
-  console.log(items, tableData);
-
-  const itemsMemo = useMemo(() => items, [items]);
   const itemWithIndex = React.useMemo(
-    () => tableData.map((item, index) => ({ ...item, index })),
-    [tableData]
+    () => items.map((item, index) => ({ ...item, index })),
+    [items]
   );
 
   return (
     <div className={bem.block()} key={tableData.length}>
       <div className={bem.element("table")}>
         <Grid
-          listId={"currencyTable" + tableData.length}
+          listId={`currencyTable${items.length}`}
           items={itemWithIndex}
           columns={columnsBasic}
           itemsIndexing

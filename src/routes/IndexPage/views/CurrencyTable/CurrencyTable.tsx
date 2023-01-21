@@ -1,18 +1,12 @@
-import React, { useEffect, useMemo, useState } from "react";
-import { useTable, useGlobalFilter } from "react-table";
+import React, { useEffect, useState } from "react";
 import { useBem, useSelector } from "@steroidsjs/core/hooks";
 import Grid from "@steroidsjs/core/ui/list/Grid";
 import Button from "@steroidsjs/core/ui/form/Button/Button";
-import {
-  CURRENCY_TABLE_COLUMNS,
-  MIN_ROW_NUMBER_FOR_VIEW,
-} from "constants/currencies";
+import { MIN_ROW_NUMBER_FOR_VIEW } from "constants/currencies";
 import { getCurrencyRates } from "reducers/currencies";
+import createCurrencyTable from "utils/createCurrencyTable";
 
 import "./CurrencyTable.scss";
-import createTable from "utils/createTable";
-
-const title = ["RUB", "USD", "EUR", "CNY"];
 
 const searchForm = {
   layout: "table",
@@ -50,36 +44,70 @@ const searchForm = {
   ],
 };
 
+const columns = [
+  {
+    label: "Код валюты (ISO 4217)",
+    attribute: "code",
+    // FIXME Uncaught Error: Not found icon with name "long-arrow-alt-down"
+    //sortable: true,
+  },
+  {
+    label: "Название валюты",
+    attribute: "name",
+    // sortable: true,
+  },
+  {
+    label: "Курс к рублю",
+    attribute: "RUB",
+    // sortable: true,
+  },
+  {
+    label: "Курс к доллару",
+    attribute: "USD",
+    // sortable: true,
+  },
+  {
+    label: "Курс к Евро",
+    attribute: "EUR",
+    // sortable: true,
+  },
+  {
+    label: "Курс к Юаню",
+    attribute: "CNY",
+    //sortable: true,
+  },
+];
+
 function CurrencyTable(): JSX.Element {
   const bem = useBem("CurrencyTable");
 
   const rates = useSelector(getCurrencyRates);
-  const table = createTable(title, rates) || [];
+  const currencyTableSource = createCurrencyTable(rates) || [];
 
+  const [currencyTable, setCurrencyTable] = useState([...currencyTableSource]);
   const [expand, setExpand] = useState(false);
-  const [items, setItems] = useState([...table]);
 
   useEffect(() => {
     if (expand) {
-      setItems([...table]);
+      setCurrencyTable(currencyTableSource);
     } else {
-      setItems([...table.slice(0, MIN_ROW_NUMBER_FOR_VIEW)]);
+      setCurrencyTable(currencyTableSource.slice(0, MIN_ROW_NUMBER_FOR_VIEW));
     }
   }, [expand, rates]);
 
   const handleExpand = React.useCallback(() => {
     setExpand(!expand);
-  }, [table]);
+  }, [currencyTableSource]);
 
-  const memoItems = React.useMemo(() => items, [items]);
+  const memoCurrencyTable = React.useMemo(() => currencyTable, [currencyTable]);
 
   return (
-    <div className={bem.block()} key={items.length}>
+    <div className={bem.block()} key={currencyTable.length}>
       <div className={bem.element("table")}>
         <Grid
-          listId={`currencyTable${items.length}`}
-          items={memoItems}
-          columns={columnsBasic}
+          listId={`currencyTable${currencyTable.length}`}
+          items={memoCurrencyTable}
+          columns={columns}
           searchForm={searchForm}
         />
         <Button onClick={handleExpand}>
@@ -119,38 +147,5 @@ export const itemsBasic = [
     USD: "0.14919",
     EUR: "0.13753",
     CNY: 1,
-  },
-];
-
-export const columnsBasic = [
-  {
-    label: "Код валюты (ISO 4217)",
-    attribute: "code",
-    // sortable: true,
-  },
-  {
-    label: "Название валюты",
-    attribute: "name",
-    // sortable: true,
-  },
-  {
-    label: "Курс к рублю",
-    attribute: "RUB",
-    // sortable: true,
-  },
-  {
-    label: "Курс к доллару",
-    attribute: "USD",
-    // sortable: true,
-  },
-  {
-    label: "Курс к Евро",
-    attribute: "EUR",
-    // sortable: true,
-  },
-  {
-    label: "Курс к Юаню",
-    attribute: "CNY",
-    // sortable: true,
   },
 ];

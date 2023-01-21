@@ -7,7 +7,7 @@ import {
 } from "constants/actionTypes";
 import { LOCALSTORAGE_CONVERTER } from "constants/currencies";
 import { RootState } from "reducers";
-import createTable from "utils/createTable";
+import createCurrencyTable from "utils/createCurrencyTable";
 import saveLocalStorage from "utils/saveLocalStorage";
 import loadLocalStorage from "utils/loadLocalStorage";
 
@@ -62,8 +62,6 @@ export default (state = defaultState(), action: any) => {
 
 export const getLastUpdateDT = (state: RootState) =>
   state.currencies.lastUpdateDT?.toLocaleString();
-
-// export const getCurrencyTable = (state: RootState) => state.currencies.table;
 
 export const getCurrencyRates = (state: RootState) => state.currencies.rates;
 

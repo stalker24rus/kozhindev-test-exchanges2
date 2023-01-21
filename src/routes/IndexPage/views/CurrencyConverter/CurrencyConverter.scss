@@ -1,22 +1,31 @@
 @import "style/variables";
 
 .CurrencyCounter {
-  // margin-top: 30px;
-  // background-color: rgb(255, 123, 0);
   max-width: 800px;
+  // display: block;
   margin: 0 auto;
-  display: flex;
+
+  &__conteiner {
+    width: 650px;
+    display: block;
+    margin: 0 auto;
+  }
 
   &__title {
-    // color: white;
-    // background-color: rgb(173, 25, 25);
     font-weight: bold;
+    margin: 5px;
+  }
+
+  &__body {
+    display: flex;
+
+    margin: 0 auto;
   }
 
   &__item {
-    display: flex;
     margin: 1px;
     color: white;
+    display: flex;
   }
 
   &__number-field {
@@ -25,5 +34,11 @@
 
   &__drop-down-field {
     width: 190px;
+  }
+
+  &__arrow {
+    font-size: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
   }
 }

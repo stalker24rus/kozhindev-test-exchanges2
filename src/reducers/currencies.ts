@@ -7,7 +7,6 @@ import {
 } from "constants/actionTypes";
 import { LOCALSTORAGE_CONVERTER } from "constants/currencies";
 import { RootState } from "reducers";
-import createCurrencyTable from "utils/createCurrencyTable";
 import saveLocalStorage from "utils/saveLocalStorage";
 import loadLocalStorage from "utils/loadLocalStorage";
 

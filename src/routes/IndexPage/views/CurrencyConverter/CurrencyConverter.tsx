@@ -29,37 +29,41 @@ export default function CurrencyConverter(): JSX.Element {
 
   return (
     <div className={bem.block()}>
-      <div className={bem.element("title")}>Конвертер валют</div>
-      <div className={bem.element("item")}>
-        <div className={bem.element("number-field")}>
-          <NumberField
-            value={firstField.value}
-            onChange={bindingChange("firstField.value")}
-          />
-        </div>
+      <div className={bem.element("conteiner")}>
+        <div className={bem.element("title")}>Конвертер валют</div>
+        <div className={bem.element("body")}>
+          <div className={bem.element("item")}>
+            <div className={bem.element("number-field")}>
+              <NumberField
+                value={firstField.value}
+                onChange={bindingChange("firstField.value")}
+              />
+            </div>
 
-        <div className={bem.element("drop-down-field")}>
-          <DropDownField
-            value={firstField.currency}
-            items={CURRENCY_LIST}
-            onChange={bindingChange("firstField.currency")}
-          />
-        </div>
-      </div>
-
-      <div className={bem.element("item")}>
-        <div className={bem.element("number-field")}>
-          <NumberField
-            value={secondField.value}
-            onChange={bindingChange("secondField.value")}
-          />
-        </div>
-        <div className={bem.element("drop-down-field")}>
-          <DropDownField
-            value={secondField.currency}
-            items={CURRENCY_LIST}
-            onChange={bindingChange("secondField.currency")}
-          />
+            <div className={bem.element("drop-down-field")}>
+              <DropDownField
+                value={firstField.currency}
+                items={CURRENCY_LIST}
+                onChange={bindingChange("firstField.currency")}
+              />
+            </div>
+          </div>
+          <div className={bem.element("arrow")}>&#8644;</div>
+          <div className={bem.element("item")}>
+            <div className={bem.element("number-field")}>
+              <NumberField
+                value={secondField.value}
+                onChange={bindingChange("secondField.value")}
+              />
+            </div>
+            <div className={bem.element("drop-down-field")}>
+              <DropDownField
+                value={secondField.currency}
+                items={CURRENCY_LIST}
+                onChange={bindingChange("secondField.currency")}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>

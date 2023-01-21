@@ -1,35 +1,76 @@
-import { ICurrencyRecord, IDropDownOption } from "models";
+import { ICurrencyRecord } from "models";
 
-export const LOCALSTORAGE_CONVERTER = "currenciesConverter";
+export const MIN_ROW_VIEW = 5;
 
-export const MIN_ROW_NUMBER_FOR_VIEW = 5;
-
-export const CURRENCY_TABLE_COLUMNS = [
+export const COLUMNS = [
   {
-    Header: "Код валюты (ISO 4217)",
-    accessor: "code",
+    label: "Код валюты (ISO 4217)",
+    attribute: "code",
+    // FIXME Uncaught Error: Not found icon with name "long-arrow-alt-down"
+    //sortable: true,
   },
   {
-    Header: "Название валюты",
-    accessor: "name",
+    label: "Название валюты",
+    attribute: "name",
+    // sortable: true,
   },
   {
-    Header: "Курс к рублю",
-    accessor: "RUB",
+    label: "Курс к рублю",
+    attribute: "RUB",
+    // sortable: true,
   },
   {
-    Header: "Курс к доллару",
-    accessor: "USD",
+    label: "Курс к доллару",
+    attribute: "USD",
+    // sortable: true,
   },
   {
-    Header: "Курс к Евро",
-    accessor: "EUR",
+    label: "Курс к Евро",
+    attribute: "EUR",
+    // sortable: true,
   },
   {
-    Header: "Курс к Юаню",
-    accessor: "CNY",
+    label: "Курс к Юаню",
+    attribute: "CNY",
+    //sortable: true,
   },
 ];
+
+export const SEARCH_FORM = {
+  layout: "table",
+  fields: [
+    {
+      attribute: "code",
+      placeholder: "Код",
+      size: "Small",
+    },
+    {
+      attribute: "name",
+      placeholder: "Название",
+      size: "Small",
+    },
+    {
+      attribute: "RUB",
+      placeholder: "RUB",
+      size: "Small",
+    },
+    {
+      attribute: "USD",
+      placeholder: "USD",
+      size: "Small",
+    },
+    {
+      attribute: "EUR",
+      placeholder: "EUR",
+      size: "Small",
+    },
+    {
+      attribute: "CNY",
+      placeholder: "CNY",
+      size: "Small",
+    },
+  ],
+};
 
 export const CURRENCY_LIST: ICurrencyRecord[] = [
   {
@@ -81,5 +122,7 @@ export const CURRENCY_LIST: ICurrencyRecord[] = [
     label: "Турецкая лира",
   },
 ];
+
+export const LOCALSTORAGE_CONVERTER = "currenciesConverter";
 
 // export const CURRENCY_OBJECT = CURRENCY_LIST.map(item);

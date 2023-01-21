@@ -7,38 +7,80 @@ import {
   CURRENCY_TABLE_COLUMNS,
   MIN_ROW_NUMBER_FOR_VIEW,
 } from "constants/currencies";
-import { getCurrencyTable } from "reducers/currencies";
+import { getCurrencyRates } from "reducers/currencies";
 
 import "./CurrencyTable.scss";
+import createTable from "utils/createTable";
+
+const title = ["RUB", "USD", "EUR", "CNY"];
+
+const searchForm = {
+  layout: "table",
+  fields: [
+    {
+      attribute: "code",
+      placeholder: "Код",
+      size: "Small",
+    },
+    {
+      attribute: "name",
+      placeholder: "Название",
+      size: "Small",
+    },
+    {
+      attribute: "RUB",
+      placeholder: "RUB",
+      size: "Small",
+    },
+    {
+      attribute: "USD",
+      placeholder: "USD",
+      size: "Small",
+    },
+    {
+      attribute: "EUR",
+      placeholder: "EUR",
+      size: "Small",
+    },
+    {
+      attribute: "CNY",
+      placeholder: "CNY",
+      size: "Small",
+    },
+  ],
+};
 
 function CurrencyTable(): JSX.Element {
   const bem = useBem("CurrencyTable");
-  const tableData = useSelector(getCurrencyTable);
+
+  const rates = useSelector(getCurrencyRates);
+  const table = createTable(title, rates) || [];
 
   const [expand, setExpand] = useState(false);
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState([...table]);
+
+  useEffect(() => {
+    if (expand) {
+      setItems([...table]);
+    } else {
+      setItems([...table.slice(0, MIN_ROW_NUMBER_FOR_VIEW)]);
+    }
+  }, [expand, rates]);
 
   const handleExpand = React.useCallback(() => {
-    const newData = expand
-      ? tableData
-      : tableData.slice(0, MIN_ROW_NUMBER_FOR_VIEW);
-    setItems([...newData]);
     setExpand(!expand);
-  }, [tableData, items.length]);
+  }, [table]);
 
-  const itemWithIndex = React.useMemo(
-    () => items.map((item, index) => ({ ...item, index })),
-    [items]
-  );
+  const memoItems = React.useMemo(() => items, [items]);
 
   return (
-    <div className={bem.block()} key={tableData.length}>
+    <div className={bem.block()} key={items.length}>
       <div className={bem.element("table")}>
         <Grid
           listId={`currencyTable${items.length}`}
-          items={itemWithIndex}
+          items={memoItems}
           columns={columnsBasic}
-          itemsIndexing
+          searchForm={searchForm}
         />
         <Button onClick={handleExpand}>
           {expand ? "Скрыть" : "Показать все"}
@@ -84,72 +126,31 @@ export const columnsBasic = [
   {
     label: "Код валюты (ISO 4217)",
     attribute: "code",
+    // sortable: true,
   },
   {
     label: "Название валюты",
     attribute: "name",
+    // sortable: true,
   },
   {
     label: "Курс к рублю",
     attribute: "RUB",
+    // sortable: true,
   },
   {
     label: "Курс к доллару",
     attribute: "USD",
+    // sortable: true,
   },
   {
     label: "Курс к Евро",
     attribute: "EUR",
+    // sortable: true,
   },
   {
     label: "Курс к Юаню",
     attribute: "CNY",
+    // sortable: true,
   },
 ];
-
-// const {
-//   getTableProps,
-//   getTableBodyProps,
-//   headerGroups,
-//   rows,
-//   state,
-//   setGlobalFilter,
-//   prepareRow,
-// } = useTable({ columns, data: items }, useGlobalFilter);
-
-// const { globalFilter } = state;
-
-{
-  /* <div className={bem.element("search-container")}>
-        <input
-          type="text"
-          value={globalFilter || ""}
-          onChange={(e) => setGlobalFilter(e.target.value)}
-        />
-      </div>
-      <table className={bem.element("table")} {...getTableProps()}>
-        <thead>
-          {headerGroups.map((headerGroup) => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row);
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map((cell) => {
-                  return (
-                    <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                  );
-                })}
-              </tr>
-            );
-          })}
-        </tbody>
-      </table> */
-}

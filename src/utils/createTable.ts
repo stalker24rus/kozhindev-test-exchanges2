@@ -2,13 +2,15 @@ import { CURRENCY_LIST } from "constants/currencies";
 import { ICurrencyTableRecord } from "models";
 import calculateRow from "./getRateRow";
 
-export default function createTable(title, rates): ICurrencyTableRecord[] {
+export default function createTable(
+  title: string[],
+  rates: any
+): ICurrencyTableRecord[] {
   const table = [];
   let i = 0;
 
   for (const property in rates) {
     const temp = {
-      id: i + 1,
       code: property,
       name:
         CURRENCY_LIST.find((element) => element.id === property)?.label ||

@@ -23,7 +23,8 @@ const defaultState = () => {
         currency: "USD",
       },
     },
-    table: [],
+    // table: [],
+    rates: {},
     lastUpdateDT: undefined,
     loading: false,
     fault: false,
@@ -37,9 +38,7 @@ export default (state = defaultState(), action: any) => {
     }
     case GET_CURRENCY_RATES_SUCCESS: {
       const { rates } = action.payload;
-      const title = ["RUB", "USD", "EUR", "CNY"];
-      const table = createTable(title, rates) || [];
-      return { ...state, table, loading: false, lastUpdateDT: new Date() };
+      return { ...state, rates, loading: false, lastUpdateDT: new Date() };
     }
 
     case GET_CURRENCY_RATES_FAILURE: {
@@ -64,7 +63,9 @@ export default (state = defaultState(), action: any) => {
 export const getLastUpdateDT = (state: RootState) =>
   state.currencies.lastUpdateDT?.toLocaleString();
 
-export const getCurrencyTable = (state: RootState) => state.currencies.table;
+// export const getCurrencyTable = (state: RootState) => state.currencies.table;
+
+export const getCurrencyRates = (state: RootState) => state.currencies.rates;
 
 export const getConverterData = (state: RootState) =>
   state.currencies.converter;

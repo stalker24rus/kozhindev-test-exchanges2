@@ -6,11 +6,11 @@ import useLayout, {
   STATUS_LOADING,
 } from "@steroidsjs/core/hooks/useLayout";
 
-import { Notifications } from "@steroidsjs/core/ui/layout";
-import Header from "@steroidsjs/core/ui/layout/Header";
+// import { Notifications } from "@steroidsjs/core/ui/layout";
+// import Header from "@steroidsjs/core/ui/layout/Header";
 
 import "./Layout.scss";
-import { ROUTE_ROOT } from "../../routes";
+// import { ROUTE_ROOT } from "../../routes";
 
 export default function Layout(props: React.PropsWithChildren<any>) {
   const bem = useBem("Layout");
@@ -28,16 +28,16 @@ export default function Layout(props: React.PropsWithChildren<any>) {
 
   return (
     <div className={bem.block()}>
-      <Header
+      {/* <Header
         logo={{
           title: "kozhindev-test-exchanges2",
         }}
         nav={{
           items: ROUTE_ROOT,
         }}
-      />
+      /> */}
       <div className={bem.element("content")}>
-        <Notifications />
+        {/* <Notifications /> */}
         {props.children}
       </div>
     </div>

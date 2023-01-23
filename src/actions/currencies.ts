@@ -5,6 +5,8 @@ import {
   GET_CURRENCY_RATES_SUCCESS,
   SET_CURRENCY_CONVERTER_DATA,
 } from "constants/actionTypes";
+import { RootState } from "reducers";
+import convertCurrency from "utils/convertCurrency";
 
 export const getCurrencyRates = () => (dispatch: Function) => {
   dispatch(getCurrencyRatesStarted());
@@ -53,7 +55,77 @@ const getCurrencyRatesFailure = (error) => ({
   payload: error,
 });
 
-export const setCurrencyConverterData = (data) => ({
-  type: SET_CURRENCY_CONVERTER_DATA,
-  payload: { data },
-});
+export const setCurrencyConverterData = (formData) => (
+  dispatch: Function,
+  getState: () => RootState
+) => {
+  const { firstField, secondField } = formData;
+  const state = getState();
+
+  if (firstField && !secondField) {
+    const updatedConverterState = updateConverterState(
+      {
+        name: "firstField",
+        content: { ...state.currencies.converter.firstField, ...firstField },
+      },
+      {
+        name: "secondField",
+        content: state.currencies.converter.secondField,
+      },
+      state.currencies.rates
+    );
+
+    dispatch({
+      type: SET_CURRENCY_CONVERTER_DATA,
+      payload: updatedConverterState,
+    });
+  }
+
+  if (!firstField && secondField) {
+    const updatedConverterState = updateConverterState(
+      {
+        name: "secondField",
+        content: { ...state.currencies.converter.secondField, ...secondField },
+      },
+      {
+        name: "firstField",
+        content: state.currencies.converter.firstField,
+      },
+      state.currencies.rates
+    );
+
+    dispatch({
+      type: SET_CURRENCY_CONVERTER_DATA,
+      payload: updatedConverterState,
+    });
+  }
+};
+
+const updateConverterState = (mainField, slaveField, rates) => {
+  const { name: mainFieldName, content: mainFieldContent } = mainField;
+  const { name: slaveFieldName, content: slaveFieldContent } = slaveField;
+
+  const newFieldValue = updateConverterForm(
+    mainFieldContent,
+    slaveFieldContent,
+    rates
+  );
+
+  console.log(newFieldValue);
+
+  return {
+    data: {
+      [mainFieldName]: mainFieldContent,
+      [slaveFieldName]: {
+        value: newFieldValue,
+        currency: slaveFieldContent.currency,
+      },
+    },
+  };
+};
+
+const updateConverterForm = (from, to, rates) => {
+  const { value: value1, currency: currency1 } = from;
+  const { value: value2, currency: currency2 } = to;
+  return convertCurrency(value1, rates[currency1], rates[currency2]);
+};

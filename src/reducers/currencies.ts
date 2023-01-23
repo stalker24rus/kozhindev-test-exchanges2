@@ -9,6 +9,7 @@ import { LOCALSTORAGE_CONVERTER } from "constants/currencies";
 import { RootState } from "reducers";
 import saveLocalStorage from "utils/saveLocalStorage";
 import loadLocalStorage from "utils/loadLocalStorage";
+// import convertCurrency from "utils/convertCurrency";
 
 const defaultState = () => {
   return {
@@ -22,7 +23,6 @@ const defaultState = () => {
         currency: "USD",
       },
     },
-    // table: [],
     rates: {},
     lastUpdateDT: undefined,
     loading: false,
@@ -46,12 +46,13 @@ export default (state = defaultState(), action: any) => {
 
     case SET_CURRENCY_CONVERTER_DATA: {
       const { data } = action.payload;
-      //console.log(data);
-      const converter = _.cloneDeep(state.converter);
-      _.merge(converter, data);
+      // const converter = _.cloneDeep(state.converter);
 
-      saveLocalStorage(LOCALSTORAGE_CONVERTER, converter);
-      return { ...state, converter };
+      // _.merge(converter, data);
+
+      saveLocalStorage(LOCALSTORAGE_CONVERTER, data);
+
+      return { ...state, converter: data };
     }
 
     default:

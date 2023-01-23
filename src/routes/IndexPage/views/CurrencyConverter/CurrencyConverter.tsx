@@ -10,14 +10,15 @@ import "./CurrencyConverter.scss";
 
 export default function CurrencyConverter(): JSX.Element {
   const bem = useBem("CurrencyCounter");
+
   const { firstField, secondField } = useSelector(getConverterData);
+
   const dispatch = useDispatch();
 
   const bindingChange = (name: string) =>
     React.useCallback(
       (value: number) => {
         const [parent, element] = name.split(".");
-
         if (parent && element) {
           dispatch(
             setCurrencyConverterData({ [parent]: { [element]: value } })
@@ -27,6 +28,11 @@ export default function CurrencyConverter(): JSX.Element {
       [dispatch]
     );
 
+  const memoFirstField = React.useMemo(() => firstField, [firstField]);
+  const memoSecondField = React.useMemo(() => secondField, [secondField]);
+
+  console.log(memoFirstField, memoSecondField);
+
   return (
     <div className={bem.block()}>
       <div className={bem.element("conteiner")}>
@@ -35,14 +41,15 @@ export default function CurrencyConverter(): JSX.Element {
           <div className={bem.element("item")}>
             <div className={bem.element("number-field")}>
               <NumberField
-                value={firstField.value}
+                value={memoFirstField.value | 0}
                 onChange={bindingChange("firstField.value")}
               />
             </div>
 
             <div className={bem.element("drop-down-field")}>
               <DropDownField
-                value={firstField.currency}
+                // inputValue={firstField.currency}
+                value={memoFirstField.currency}
                 items={CURRENCY_LIST}
                 onChange={bindingChange("firstField.currency")}
               />
@@ -52,13 +59,14 @@ export default function CurrencyConverter(): JSX.Element {
           <div className={bem.element("item")}>
             <div className={bem.element("number-field")}>
               <NumberField
-                value={secondField.value}
+                value={memoSecondField.value | 0}
                 onChange={bindingChange("secondField.value")}
               />
             </div>
             <div className={bem.element("drop-down-field")}>
               <DropDownField
-                value={secondField.currency}
+                value={memoSecondField.currency}
+                // inputValue={secondField.currency}
                 items={CURRENCY_LIST}
                 onChange={bindingChange("secondField.currency")}
               />

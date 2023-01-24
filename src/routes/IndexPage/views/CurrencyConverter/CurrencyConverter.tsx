@@ -41,6 +41,10 @@ export default function CurrencyConverter(): JSX.Element {
           <div className={bem.element("item")}>
             <div className={bem.element("number-field")}>
               <NumberField
+                // inputProps={{
+                //   type: "number",
+                //   step: 0.1,
+                // }}
                 value={memoFirstField.value | 0}
                 onChange={bindingChange("firstField.value")}
               />
@@ -58,7 +62,9 @@ export default function CurrencyConverter(): JSX.Element {
           <div className={bem.element("arrow")}>&#8644;</div>
           <div className={bem.element("item")}>
             <div className={bem.element("number-field")}>
+              <input type="number" step="any" />
               <NumberField
+                // step={0.01}
                 value={memoSecondField.value | 0}
                 onChange={bindingChange("secondField.value")}
               />

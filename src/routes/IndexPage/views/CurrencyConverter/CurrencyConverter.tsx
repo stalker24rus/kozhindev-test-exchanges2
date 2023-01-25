@@ -1,11 +1,12 @@
 import React from "react";
 import { useBem, useDispatch, useSelector } from "@steroidsjs/core/hooks";
-import NumberField from "@steroidsjs/core/ui/form/NumberField";
+
 import DropDownField from "@steroidsjs/core/ui/form/DropDownField";
 import { CURRENCY_LIST } from "constants/currencies";
 import { getConverterData } from "reducers/currencies";
 import { setCurrencyConverterData } from "actions/currencies";
 
+import NumberField from "./view/NumberField";
 import "./CurrencyConverter.scss";
 
 export default function CurrencyConverter(): JSX.Element {
@@ -30,9 +31,6 @@ export default function CurrencyConverter(): JSX.Element {
 
   const memoFirstField = React.useMemo(() => firstField, [firstField]);
   const memoSecondField = React.useMemo(() => secondField, [secondField]);
-
-  console.log(memoFirstField, memoSecondField);
-
   return (
     <div className={bem.block()}>
       <div className={bem.element("conteiner")}>
@@ -41,18 +39,13 @@ export default function CurrencyConverter(): JSX.Element {
           <div className={bem.element("item")}>
             <div className={bem.element("number-field")}>
               <NumberField
-                // inputProps={{
-                //   type: "number",
-                //   step: 0.1,
-                // }}
-                value={memoFirstField.value | 0}
+                value={memoFirstField.value.toString()}
                 onChange={bindingChange("firstField.value")}
               />
             </div>
 
             <div className={bem.element("drop-down-field")}>
               <DropDownField
-                // inputValue={firstField.currency}
                 value={memoFirstField.currency}
                 items={CURRENCY_LIST}
                 onChange={bindingChange("firstField.currency")}
@@ -62,10 +55,8 @@ export default function CurrencyConverter(): JSX.Element {
           <div className={bem.element("arrow")}>&#8644;</div>
           <div className={bem.element("item")}>
             <div className={bem.element("number-field")}>
-              <input type="number" step="any" />
               <NumberField
-                // step={0.01}
-                value={memoSecondField.value | 0}
+                value={memoSecondField.value.toString()}
                 onChange={bindingChange("secondField.value")}
               />
             </div>

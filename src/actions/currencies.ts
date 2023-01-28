@@ -115,9 +115,9 @@ const updateConverterState = (mainField, slaveField, rates) => {
 
   return {
     data: {
-      [mainFieldName]: mainFieldContent,
+      [mainFieldName]: { ...mainFieldContent },
       [slaveFieldName]: {
-        value: newFieldValue.toString(),
+        value: newFieldValue,
         currency: slaveFieldContent.currency,
       },
     },
@@ -126,10 +126,10 @@ const updateConverterState = (mainField, slaveField, rates) => {
 
 const updateConverterForm = (from, to, rates) => {
   const { value: value1, currency: currency1 } = from;
-  const { value: value2, currency: currency2 } = to;
+  const { currency: currency2 } = to;
   return convertCurrency(
     parseFloat(value1),
     rates[currency1],
     rates[currency2]
-  );
+  ).toFixed(2);
 };

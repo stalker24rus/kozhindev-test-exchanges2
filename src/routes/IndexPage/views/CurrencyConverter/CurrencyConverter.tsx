@@ -39,7 +39,7 @@ export default function CurrencyConverter(): JSX.Element {
           <div className={bem.element("item")}>
             <div className={bem.element("number-field")}>
               <NumberField
-                value={memoFirstField.value.toString()}
+                value={memoFirstField.value}
                 onChange={bindingChange("firstField.value")}
               />
             </div>
@@ -56,7 +56,7 @@ export default function CurrencyConverter(): JSX.Element {
           <div className={bem.element("item")}>
             <div className={bem.element("number-field")}>
               <NumberField
-                value={memoSecondField.value.toString()}
+                value={memoSecondField.value}
                 onChange={bindingChange("secondField.value")}
               />
             </div>

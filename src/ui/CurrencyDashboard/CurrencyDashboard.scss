@@ -1,0 +1,15 @@
+.CurrencyDashboard {
+  &__item {
+    margin: 1px;
+    color: white;
+    display: flex;
+  }
+
+  &__number-field {
+    width: 150px;
+  }
+
+  &__drop-down-field {
+    width: 190px;
+  }
+}

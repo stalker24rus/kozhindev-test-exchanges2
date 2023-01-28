@@ -1,10 +1,12 @@
 import { useBem } from "@steroidsjs/core/hooks";
+import InputFieldView from "@steroidsjs/core/ui/form/InputField";
+
 import React from "react";
 
 import "./NumberField.scss";
 
 interface INumberFieldProps {
-  value: string;
+  value: number;
   onChange: Function;
 }
 
@@ -15,22 +17,18 @@ export default function NumberField({
   const bem = useBem("CurrencyCounter");
 
   const handleChange = React.useCallback(
-    (ev) => {
-      const newValue = ev.target.value;
-      console.log("newValue", newValue);
-      onChange(newValue);
+    (value) => {
+      onChange(value);
     },
     [onChange]
   );
 
-  const memoValue = React.useMemo(() => value.replace(".", ","), [value]);
-  console.log(memoValue);
   return (
     <div className={bem.block()}>
-      <input
+      <InputFieldView
         type="number"
         className={bem.element("input")}
-        value={memoValue}
+        value={value}
         onChange={handleChange}
       />
     </div>

@@ -6,7 +6,7 @@ import { CURRENCY_LIST } from "constants/currencies";
 import { getConverterData } from "reducers/currencies";
 import { setCurrencyConverterData } from "actions/currencies";
 
-import NumberField from "./view/NumberField";
+import NumberField from "../../../../ui/NumberField";
 import "./CurrencyConverter.scss";
 
 export default function CurrencyConverter(): JSX.Element {

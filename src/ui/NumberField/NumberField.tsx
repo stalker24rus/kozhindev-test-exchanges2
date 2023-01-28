@@ -17,17 +17,18 @@ export default function NumberField({
   const handleChange = React.useCallback(
     (ev) => {
       const newValue = ev.target.value;
-      //   onChange(newValue.replace(",", ".").replace(/[^0-9.,]/g, ""));
-      onChange(newValue.replace(/\d\,\d/g, "").replace(",", "."));
+      console.log("newValue", newValue);
+      onChange(newValue);
     },
     [onChange]
   );
 
   const memoValue = React.useMemo(() => value.replace(".", ","), [value]);
-
+  console.log(memoValue);
   return (
     <div className={bem.block()}>
       <input
+        type="number"
         className={bem.element("input")}
         value={memoValue}
         onChange={handleChange}

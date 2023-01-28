@@ -60,6 +60,7 @@ export const setCurrencyConverterData = (formData) => (
   getState: () => RootState
 ) => {
   const { firstField, secondField } = formData;
+  console.log(firstField, secondField);
   const state = getState();
 
   if (firstField && !secondField) {

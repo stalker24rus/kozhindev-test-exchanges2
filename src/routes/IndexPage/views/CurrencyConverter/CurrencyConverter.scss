@@ -1,12 +1,11 @@
 @import "style/variables";
 
-.CurrencyCounter {
-  max-width: 800px;
-  // display: block;
+.CurrencyConverter {
+  max-width: 700px;
   margin: 0 auto;
 
-  &__conteiner {
-    width: 650px;
+  &__container {
+    // width: 450px;
     display: block;
     margin: 0 auto;
   }
@@ -17,23 +16,10 @@
   }
 
   &__body {
-    display: flex;
-
-    margin: 0 auto;
-  }
-
-  &__item {
-    margin: 1px;
-    color: white;
-    display: flex;
-  }
-
-  &__number-field {
-    width: 150px;
-  }
-
-  &__drop-down-field {
-    width: 190px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    // max-width: 720px;
+    // margin: 0 auto;
   }
 
   &__arrow {

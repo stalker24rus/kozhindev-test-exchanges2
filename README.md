@@ -1,5 +1,7 @@
 # kozhindev-test-exchanges2
 
+Пример тут => https://stalker24rus.github.io/
+
 ##### Установка
 
 Выполнить `yarn`

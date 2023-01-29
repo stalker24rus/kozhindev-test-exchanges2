@@ -27,62 +27,20 @@ export default function CurrencyConverter(): JSX.Element {
 
   return (
     <div className={bem.block()}>
-      <div className={bem.element("container")}>
-        <div className={bem.element("title")}>Конвертер валют</div>
-        <div className={bem.element("body")}>
-          <Dashboard
-            currencyInfo={memoFirstField}
-            onChange={bindOnChange("firstField")}
-          />
+      <div className={bem.element("title")}>КОНВЕРТЕР ВАЛЮТ</div>
+      <div className={bem.element("body")}>
+        <Dashboard
+          currencyInfo={memoFirstField}
+          onChange={bindOnChange("firstField")}
+        />
 
-          <div className={bem.element("arrow")}>&#8644;</div>
+        <div className={bem.element("arrow")}>&#8644;</div>
 
-          <Dashboard
-            currencyInfo={memoSecondField}
-            onChange={bindOnChange("secondField")}
-          />
-        </div>
+        <Dashboard
+          currencyInfo={memoSecondField}
+          onChange={bindOnChange("secondField")}
+        />
       </div>
     </div>
   );
-}
-
-{
-  /* 
-             <div className={bem.element("item")}>
-            <div className={bem.element("number-field")}>
-              <NumberField
-                value={memoFirstField.value}
-                onChange={bindingChange("firstField.value")}
-              />
-            </div>
-
-            <div className={bem.element("drop-down-field")}>
-              <DropDownField
-                value={memoFirstField.currency}
-                items={CURRENCY_LIST}
-                onChange={bindingChange("firstField.currency")}
-              />
-            </div>
-          </div> */
-}
-
-{
-  /* <div className={bem.element("item")}>
-            <div className={bem.element("number-field")}>
-              <NumberField
-                value={memoSecondField.value}
-                onChange={bindingChange("secondField.value")}
-              />
-            </div>
-            <div className={bem.element("drop-down-field")}>
-              <DropDownField
-                value={memoSecondField.currency}
-                // inputValue={secondField.currency}
-                items={CURRENCY_LIST}
-                onChange={bindingChange("secondField.currency")}
-              />
-            </div> 
-
-          </div>*/
 }

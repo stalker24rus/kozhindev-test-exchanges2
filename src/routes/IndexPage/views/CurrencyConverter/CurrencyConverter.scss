@@ -1,25 +1,17 @@
 @import "style/variables";
 
 .CurrencyConverter {
-  max-width: 700px;
+  max-width: 725px;
   margin: 0 auto;
-
-  &__container {
-    // width: 450px;
-    display: block;
-    margin: 0 auto;
-  }
 
   &__title {
     font-weight: bold;
-    margin: 5px;
+    max-width: 165px;
+    margin: 0 auto;
   }
 
   &__body {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    // max-width: 720px;
-    // margin: 0 auto;
+    display: flex;
   }
 
   &__arrow {

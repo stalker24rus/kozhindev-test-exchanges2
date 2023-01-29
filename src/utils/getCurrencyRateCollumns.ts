@@ -13,7 +13,7 @@ export default function getCurrencyCource(
     if (rates[сourseCollumn] !== undefined) {
       currencyCource[сourseCollumn] =
         rowCurrencyCode !== сourseCollumn
-          ? (rates[сourseCollumn] / baseRate).toFixed(2)
+          ? (baseRate / rates[сourseCollumn]).toFixed(2)
           : 1;
     }
   }

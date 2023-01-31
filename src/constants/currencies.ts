@@ -1,12 +1,11 @@
-import { ICurrencyRecord } from "models";
+export const LOCALSTORAGE_CONVERTER = "currenciesConverter";
+export const MIN_AMOUNT_ROW_FOR_VIEW = 5;
 
-export const MIN_ROW_VIEW = 5;
-
+// FIXME Uncaught Error: Not found icon with name "long-arrow-alt-down"
 export const COLUMNS = [
   {
     label: "Код валюты (ISO 4217)",
     attribute: "code",
-    // FIXME Uncaught Error: Not found icon with name "long-arrow-alt-down"
     //sortable: true,
   },
   {
@@ -72,7 +71,7 @@ export const SEARCH_FORM = {
   ],
 };
 
-export const CURRENCY_LIST: ICurrencyRecord[] = [
+export const CURRENCY_LIST = [
   {
     id: "RUB",
     label: "Российский рубль",
@@ -122,7 +121,3 @@ export const CURRENCY_LIST: ICurrencyRecord[] = [
     label: "Турецкая лира",
   },
 ];
-
-export const LOCALSTORAGE_CONVERTER = "currenciesConverter";
-
-// export const CURRENCY_OBJECT = CURRENCY_LIST.map(item);

@@ -9,7 +9,6 @@ import { LOCALSTORAGE_CONVERTER } from "constants/currencies";
 import { RootState } from "reducers";
 import saveLocalStorage from "utils/saveLocalStorage";
 import loadLocalStorage from "utils/loadLocalStorage";
-// import convertCurrency from "utils/convertCurrency";
 
 const defaultState = () => {
   return {
@@ -46,12 +45,7 @@ export default (state = defaultState(), action: any) => {
 
     case SET_CURRENCY_CONVERTER_DATA: {
       const { data } = action.payload;
-      // const converter = _.cloneDeep(state.converter);
-
-      // _.merge(converter, data);
-
       saveLocalStorage(LOCALSTORAGE_CONVERTER, data);
-
       return { ...state, converter: data };
     }
 

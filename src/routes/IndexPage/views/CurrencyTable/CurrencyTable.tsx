@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useBem, useSelector } from "@steroidsjs/core/hooks";
 import Grid from "@steroidsjs/core/ui/list/Grid";
 import Button from "@steroidsjs/core/ui/form/Button/Button";
-import { COLUMNS, MIN_ROW_VIEW, SEARCH_FORM } from "constants/currencies";
+import {
+  COLUMNS,
+  MIN_AMOUNT_ROW_FOR_VIEW,
+  SEARCH_FORM,
+} from "constants/currencies";
 import { getCurrencyRates } from "reducers/currencies";
-import createCurrencyTable from "utils/createCurrencyTable";
+import getCurrencyTable from "utils/getCurrencyTable";
 
 import "./CurrencyTable.scss";
 
@@ -15,7 +19,7 @@ function CurrencyTable(): JSX.Element {
 
   const rates = useSelector(getCurrencyRates);
   const sourceTable =
-    React.useMemo(() => createCurrencyTable(rates), [rates]) || [];
+    React.useMemo(() => getCurrencyTable(rates), [rates]) || [];
 
   const handleExpand = React.useCallback(() => {
     setExpand(!expand);
@@ -25,7 +29,7 @@ function CurrencyTable(): JSX.Element {
     if (expand) {
       setCurrencyTable(sourceTable);
     } else {
-      setCurrencyTable(sourceTable.slice(0, MIN_ROW_VIEW));
+      setCurrencyTable(sourceTable.slice(0, MIN_AMOUNT_ROW_FOR_VIEW));
     }
   }, [expand, sourceTable]);
 

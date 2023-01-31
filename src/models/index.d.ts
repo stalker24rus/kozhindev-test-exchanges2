@@ -7,14 +7,14 @@ export interface ICurrencyTableRecord {
   yuanExchangeRate: number;
 }
 
-export interface ICurrencyCounterItems {
-  first: ICurrencyCounterRecord;
-  second: ICurrencyCounterRecord;
+export interface ICurrencyConverterItems {
+  firstField: ICurrencyConverterRecord;
+  secondField: ICurrencyConverterRecord;
 }
 
-export interface ICurrencyCounterRecord {
+export interface ICurrencyConverterRecord {
   value: number;
-  currency: IDropDownOption;
+  currency: string;
 }
 
 export interface IDropDownFieldProps {
@@ -29,16 +29,8 @@ export interface IDropDownOption {
   label: string;
 }
 
-export interface INumberFieldProps {
-  name?: string;
-  min?: number;
-  max?: number;
-  step?: number | string;
-  value: number;
-  onChange: Function;
-}
-
-export interface ICurrencyRecord {
-  id: string;
-  label: string;
+export interface IApiRequestResult {
+  base: string;
+  date: string;
+  rates: { [key: string]: number };
 }

@@ -30,14 +30,14 @@ export default function CurrencyConverter(): JSX.Element {
       <div className={bem.element("title")}>КОНВЕРТЕР ВАЛЮТ</div>
       <div className={bem.element("body")}>
         <Dashboard
-          currencyInfo={memoFirstField}
+          record={memoFirstField}
           onChange={bindOnChange("firstField")}
         />
 
         <div className={bem.element("arrow")}>&#8644;</div>
 
         <Dashboard
-          currencyInfo={memoSecondField}
+          record={memoSecondField}
           onChange={bindOnChange("secondField")}
         />
       </div>

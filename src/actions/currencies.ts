@@ -1,16 +1,58 @@
-import { getNewCurrencyRates } from "api/rateService";
+import { getNewCurrencyRates } from "api/apiService";
 import {
   GET_CURRENCY_RATES_FAILURE,
   GET_CURRENCY_RATES_STARTED,
   GET_CURRENCY_RATES_SUCCESS,
   SET_CURRENCY_CONVERTER_DATA,
 } from "constants/actionTypes";
+import { IApiRequestResult, ICurrencyConverterItems } from "models";
 import { RootState } from "reducers";
-import convertCurrency from "utils/convertCurrency";
+import getNewConverterState from "utils/getNewConverterState";
 
 export const getCurrencyRates = () => (dispatch: Function) => {
   dispatch(getCurrencyRatesStarted());
 
+  if (true) {
+    getFakeRequestData(dispatch); // для проверки без использования api
+  } else {
+    getNewCurrencyRates()
+      .then((response) => dispatch(getCurrencyRatesSuccess(response.data)))
+      .catch((error) => dispatch(getCurrencyRatesFailure(error)));
+  }
+};
+
+const getCurrencyRatesStarted = () => ({
+  type: GET_CURRENCY_RATES_STARTED,
+});
+
+const getCurrencyRatesSuccess = (result: IApiRequestResult) => ({
+  type: GET_CURRENCY_RATES_SUCCESS,
+  payload: {
+    ...result,
+  },
+});
+
+const getCurrencyRatesFailure = (error: any) => ({
+  type: GET_CURRENCY_RATES_FAILURE,
+  payload: error,
+});
+
+export const setCurrencyConverterData = (changes: { [key: string]: any }) => (
+  dispatch: Function,
+  getState: () => RootState
+) => {
+  const state = getState();
+  const { converter, rates } = state.currencies;
+
+  const newConverterState = getNewConverterState(changes, converter, rates);
+
+  dispatch({
+    type: SET_CURRENCY_CONVERTER_DATA,
+    payload: { data: newConverterState },
+  });
+};
+
+function getFakeRequestData(dispatch: Function) {
   setTimeout(() => {
     dispatch(
       getCurrencyRatesSuccess({
@@ -33,104 +75,4 @@ export const getCurrencyRates = () => (dispatch: Function) => {
       })
     );
   }, 1000);
-
-  // getNewCurrencyRates()
-  //   .then((response) => dispatch(getCurrencyRatesSuccess(response.data)))
-  //   .catch((err) => dispatch(getCurrencyRatesFailure(err)));
-};
-
-const getCurrencyRatesStarted = () => ({
-  type: GET_CURRENCY_RATES_STARTED,
-});
-
-const getCurrencyRatesSuccess = (result) => ({
-  type: GET_CURRENCY_RATES_SUCCESS,
-  payload: {
-    ...result,
-  },
-});
-
-const getCurrencyRatesFailure = (error) => ({
-  type: GET_CURRENCY_RATES_FAILURE,
-  payload: error,
-});
-
-export const setCurrencyConverterData = (formData) => (
-  dispatch: Function,
-  getState: () => RootState
-) => {
-  const { firstField, secondField } = formData;
-  console.log(firstField, secondField);
-  const state = getState();
-
-  if (firstField && !secondField) {
-    const updatedConverterState = updateConverterState(
-      {
-        name: "firstField",
-        content: { ...state.currencies.converter.firstField, ...firstField },
-      },
-      {
-        name: "secondField",
-        content: state.currencies.converter.secondField,
-      },
-      state.currencies.rates
-    );
-
-    dispatch({
-      type: SET_CURRENCY_CONVERTER_DATA,
-      payload: updatedConverterState,
-    });
-  }
-
-  if (!firstField && secondField) {
-    const updatedConverterState = updateConverterState(
-      {
-        name: "secondField",
-        content: { ...state.currencies.converter.secondField, ...secondField },
-      },
-      {
-        name: "firstField",
-        content: state.currencies.converter.firstField,
-      },
-      state.currencies.rates
-    );
-
-    dispatch({
-      type: SET_CURRENCY_CONVERTER_DATA,
-      payload: updatedConverterState,
-    });
-  }
-};
-
-const updateConverterState = (mainField, slaveField, rates) => {
-  const { name: mainFieldName, content: mainFieldContent } = mainField;
-  const { name: slaveFieldName, content: slaveFieldContent } = slaveField;
-
-  const newFieldValue = updateConverterForm(
-    mainFieldContent,
-    slaveFieldContent,
-    rates
-  );
-
-  console.log(newFieldValue.toString());
-
-  return {
-    data: {
-      [mainFieldName]: { ...mainFieldContent },
-      [slaveFieldName]: {
-        value: newFieldValue,
-        currency: slaveFieldContent.currency,
-      },
-    },
-  };
-};
-
-const updateConverterForm = (from, to, rates) => {
-  const { value: value1, currency: currency1 } = from;
-  const { currency: currency2 } = to;
-  return convertCurrency(
-    parseFloat(value1),
-    rates[currency1],
-    rates[currency2]
-  ).toFixed(2);
-};
+}

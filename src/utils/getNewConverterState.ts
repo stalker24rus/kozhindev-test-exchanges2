@@ -42,7 +42,7 @@ export default function getNewConverterState(
   return converterState;
 }
 
-export function getUpdatedFields(mainField, slaveField, rates) {
+function getUpdatedFields(mainField, slaveField, rates) {
   const { name: mainFieldName, content: mainFieldContent } = mainField;
   const { name: slaveFieldName, content: slaveFieldContent } = slaveField;
 
@@ -61,19 +61,19 @@ export function getUpdatedFields(mainField, slaveField, rates) {
   };
 }
 
-export const getNewFieldValue = (
+function getNewFieldValue(
   from: ICurrencyConverterRecord,
   to: ICurrencyConverterRecord,
   rates: IApiRequestResult["rates"]
-): number => {
+) {
   const { value: value1, currency: currency1 } = from;
   const { currency: currency2 } = to;
   return parseFloat(
     convertCurrency(value1, rates[currency1], rates[currency2]).toFixed(2)
   );
-};
+}
 
-export function convertCurrency(
+function convertCurrency(
   count: number,
   baseFrom: number,
   baseTo: number

@@ -3,9 +3,9 @@ import { useBem, useSelector } from "@steroidsjs/core/hooks";
 import Grid from "@steroidsjs/core/ui/list/Grid";
 import Button from "@steroidsjs/core/ui/form/Button/Button";
 import {
-  COLUMNS,
+  TABLE_COLUMNS,
   MIN_AMOUNT_ROW_FOR_VIEW,
-  SEARCH_FORM,
+  TABLE_SEARCH_FORM,
 } from "constants/currencies";
 import { getCurrencyRates } from "reducers/currencies";
 import getCurrencyTable from "utils/getCurrencyTable";
@@ -41,8 +41,8 @@ function CurrencyTable(): JSX.Element {
         <Grid
           listId={`currencyTable${table.length}`}
           items={memoTable}
-          columns={COLUMNS}
-          searchForm={SEARCH_FORM}
+          columns={TABLE_COLUMNS}
+          searchForm={TABLE_SEARCH_FORM}
         />
         <Button onClick={handleExpand}>
           {expand ? "Скрыть" : "Показать все"}

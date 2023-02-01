@@ -1,23 +1,20 @@
-import { CURRENCY_LIST } from "constants/currencies";
+import {
+  CURRENCY_DICTIONARY,
+  TABLE_EXCHANGE_RATE_CODES,
+} from "constants/currencies";
 import { IApiRequestResult, ICurrencyTableRecord } from "models";
 
 export default function getCurrencyTable(
   rates: IApiRequestResult["rates"]
 ): ICurrencyTableRecord[] {
   const table = [];
-  let i = 0;
 
-  for (const rowCurrency in rates) {
-    const currencyName =
-      CURRENCY_LIST.find((element) => element.id === rowCurrency)?.label ||
-      undefined;
-
+  for (const rowBaseCurrency in rates) {
     table.push({
-      code: rowCurrency,
-      name: currencyName,
-      ...getRateRows(rowCurrency, rates),
+      code: rowBaseCurrency,
+      name: CURRENCY_DICTIONARY[rowBaseCurrency],
+      ...getRateRows(rowBaseCurrency, rates),
     });
-    i++;
   }
 
   return table;
@@ -27,19 +24,17 @@ function getRateRows(
   rowCurrencyCode: string,
   rates: IApiRequestResult["rates"]
 ): { [key: string]: number } {
-  const currencyCource = {};
-  const сourseСollumns = ["RUB", "USD", "EUR", "CNY"];
-
-  for (let i = 0; i < сourseСollumns.length; i++) {
-    const сourseCollumn = сourseСollumns[i];
+  const exchangeRates = {};
+  for (let i = 0; i < TABLE_EXCHANGE_RATE_CODES.length; i++) {
+    const exhangeRateCode = TABLE_EXCHANGE_RATE_CODES[i];
     const baseRate = rates[rowCurrencyCode];
 
-    if (rates[сourseCollumn] !== undefined) {
-      currencyCource[сourseCollumn] =
-        rowCurrencyCode !== сourseCollumn
-          ? (baseRate / rates[сourseCollumn]).toFixed(2)
-          : 1;
+    if (rates[exhangeRateCode] !== undefined) {
+      exchangeRates[exhangeRateCode] =
+        rowCurrencyCode !== exhangeRateCode
+          ? (baseRate / rates[exhangeRateCode]).toFixed(2).replace(".", ",")
+          : "1";
     }
   }
-  return currencyCource;
+  return exchangeRates;
 }

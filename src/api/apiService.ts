@@ -1,8 +1,8 @@
 import axios from "axios";
 import {
   API_KEY,
-  BASE_CURRENCY,
-  REQUSTED_SIMBOLS,
+  BASE_CURRENCY_CODE,
+  REQUEST_CODES,
   URL,
 } from "constants/apiService";
 
@@ -15,6 +15,6 @@ const axiosInstance = axios.create({
 
 export function getNewCurrencyRates() {
   return axiosInstance.get(
-    `/fixer/latest?base=${BASE_CURRENCY}&symbols=${REQUSTED_SIMBOLS}`
+    `/fixer/latest?base=${BASE_CURRENCY_CODE}&symbols=${REQUEST_CODES}`
   );
 }

@@ -1,8 +1,30 @@
 export const LOCALSTORAGE_CONVERTER = "currenciesConverter";
 export const MIN_AMOUNT_ROW_FOR_VIEW = 5;
 
-// FIXME Uncaught Error: Not found icon with name "long-arrow-alt-down"
-export const COLUMNS = [
+export const CURRENCY_DICTIONARY = {
+  RUB: "Российский рубль",
+  EUR: "Евро",
+  USD: "Доллар США",
+  CNY: "Китайский юань",
+  AED: "Дирхам",
+  UAH: "Гривна",
+  JPY: "Йена",
+  GBP: "Фунт Стерлингов",
+  INR: "Индийская рупия",
+  AMD: "Драхм",
+  THB: "Бат",
+  TRY: "Турецкая лира",
+};
+
+export const CURRENCY_DROPDOWN_LIST = Object.entries(CURRENCY_DICTIONARY).map(
+  ([key, value]) => {
+    return { id: key, label: value };
+  }
+);
+
+// FIXME If sortable: true -> Uncaught Error: Not found icon with name "long-arrow-alt-down"
+
+export const TABLE_BASE_COLUMNS = [
   {
     label: "Код валюты (ISO 4217)",
     attribute: "code",
@@ -13,6 +35,9 @@ export const COLUMNS = [
     attribute: "name",
     // sortable: true,
   },
+];
+
+export const TABLE_EXCHANGE_RATE_COLUMNS = [
   {
     label: "Курс к рублю",
     attribute: "RUB",
@@ -35,7 +60,16 @@ export const COLUMNS = [
   },
 ];
 
-export const SEARCH_FORM = {
+export const TABLE_COLUMNS = [
+  ...TABLE_BASE_COLUMNS,
+  ...TABLE_EXCHANGE_RATE_COLUMNS,
+];
+
+export const TABLE_EXCHANGE_RATE_CODES = TABLE_EXCHANGE_RATE_COLUMNS.map(
+  (element) => element.attribute
+);
+
+export const TABLE_SEARCH_FORM = {
   layout: "table",
   fields: [
     {
@@ -70,54 +104,3 @@ export const SEARCH_FORM = {
     },
   ],
 };
-
-export const CURRENCY_LIST = [
-  {
-    id: "RUB",
-    label: "Российский рубль",
-  },
-  {
-    id: "EUR",
-    label: "Евро",
-  },
-  {
-    id: "USD",
-    label: "Доллар США",
-  },
-  {
-    id: "CNY",
-    label: "Китайский юань",
-  },
-  {
-    id: "AED",
-    label: "Дирхам",
-  },
-  {
-    id: "UAH",
-    label: "Гривна",
-  },
-  {
-    id: "JPY",
-    label: "Йена",
-  },
-  {
-    id: "GBP",
-    label: "Фунт Стерлингов",
-  },
-  {
-    id: "INR",
-    label: "Индийская рупия",
-  },
-  {
-    id: "AMD",
-    label: "Драхм",
-  },
-  {
-    id: "THB",
-    label: "Бат",
-  },
-  {
-    id: "TRY",
-    label: "Турецкая лира",
-  },
-];

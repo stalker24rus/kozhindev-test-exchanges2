@@ -8,6 +8,7 @@
     font-weight: bold;
     max-width: 165px;
     margin: 0 auto;
+    user-select: none;
   }
 
   &__body {
@@ -18,5 +19,6 @@
     font-size: 25px;
     margin-left: 10px;
     margin-right: 10px;
+    user-select: none;
   }
 }

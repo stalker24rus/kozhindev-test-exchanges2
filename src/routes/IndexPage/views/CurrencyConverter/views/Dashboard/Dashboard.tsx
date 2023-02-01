@@ -4,7 +4,7 @@ import { useBem } from "@steroidsjs/core/hooks";
 import InputFieldView from "@steroidsjs/core/ui/form/InputField";
 import DropDownField from "@steroidsjs/core/ui/form/DropDownField";
 
-import { CURRENCY_LIST } from "constants/currencies";
+import { CURRENCY_DROPDOWN_LIST } from "constants/currencies";
 
 import "./Dashboard.scss";
 
@@ -24,6 +24,9 @@ export default function Dashboard({ record, onChange }) {
       <div className={bem.element("number-field")}>
         <InputFieldView
           type="number"
+          inputProps={{
+            min: 0,
+          }}
           className={bem.element("input")}
           value={record.value}
           onChange={bindOnChange("value")}
@@ -33,7 +36,7 @@ export default function Dashboard({ record, onChange }) {
       <div className={bem.element("drop-down-field")}>
         <DropDownField
           value={record.currency}
-          items={CURRENCY_LIST}
+          items={CURRENCY_DROPDOWN_LIST}
           onChange={bindOnChange("currency")}
         />
       </div>

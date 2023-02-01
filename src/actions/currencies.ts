@@ -5,14 +5,14 @@ import {
   GET_CURRENCY_RATES_SUCCESS,
   SET_CURRENCY_CONVERTER_DATA,
 } from "constants/actionTypes";
-import { IApiRequestResult, ICurrencyConverterItems } from "models";
+import { IApiRequestResult } from "models";
 import { RootState } from "reducers";
 import getNewConverterState from "utils/getNewConverterState";
 
 export const getCurrencyRates = () => (dispatch: Function) => {
   dispatch(getCurrencyRatesStarted());
 
-  if (true) {
+  if (false) {
     getFakeRequestData(dispatch); // для проверки без использования api
   } else {
     getNewCurrencyRates()

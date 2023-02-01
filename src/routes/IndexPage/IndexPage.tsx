@@ -31,8 +31,8 @@ function IndexPage(): JSX.Element {
   return (
     <div className={bem.block()}>
       <CurrencyHeader />
-      <CurrencyTable />
       <CurrencyConverter />
+      <CurrencyTable />
       {loading && <LoadingRing />}
     </div>
   );

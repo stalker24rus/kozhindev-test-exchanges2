@@ -5,13 +5,13 @@ export interface ICurrencyTableRecord {
 }
 
 export interface ICurrencyConverterItems {
-  firstField: ICurrencyConverterRecord;
-  secondField: ICurrencyConverterRecord;
+  firstCurrency: ICurrencyConverterRecord;
+  secondCurrency: ICurrencyConverterRecord;
 }
 
 export interface ICurrencyConverterRecord {
   value: number;
-  currency: string;
+  code: string;
 }
 
 export interface IDropDownFieldProps {

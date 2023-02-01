@@ -1,82 +1,66 @@
-import {
-  IApiRequestResult,
-  ICurrencyConverterItems,
-  ICurrencyConverterRecord,
-} from "models";
+import { IApiRequestResult, ICurrencyConverterItems } from "models";
 
+//FIXME  Код с запашком
 export default function getNewConverterState(
-  changedField: { [key: string]: any },
-  converterState: ICurrencyConverterItems,
+  changes: any,
+  converter: ICurrencyConverterItems,
   currencyRates: IApiRequestResult["rates"]
 ) {
-  const { firstField, secondField } = changedField;
+  const { firstCurrency, secondCurrency } = changes;
 
-  if (firstField && !secondField) {
-    return getUpdatedFields(
-      {
-        name: "firstField",
-        content: { ...converterState.firstField, ...firstField },
-      },
-      {
-        name: "secondField",
-        content: { ...converterState.secondField },
-      },
-      currencyRates
+  if (firstCurrency && !secondCurrency) {
+    const newFirstCurrency = {
+      ...converter.firstCurrency,
+      ...firstCurrency,
+    };
+
+    const newSecondCurrencyValue = getConvertedValue(
+      newFirstCurrency.value,
+      currencyRates[newFirstCurrency.code],
+      currencyRates[converter.secondCurrency.code]
     );
+
+    if (isValidValue(newSecondCurrencyValue)) {
+      return {
+        firstCurrency: { ...newFirstCurrency },
+        secondCurrency: {
+          ...converter.secondCurrency,
+          value: newSecondCurrencyValue,
+        },
+      };
+    }
   }
 
-  if (!firstField && secondField) {
-    return getUpdatedFields(
-      {
-        name: "secondField",
-        content: { ...converterState.secondField, ...secondField },
-      },
-      {
-        name: "firstField",
-        content: { ...converterState.firstField },
-      },
-      currencyRates
+  if (!firstCurrency && secondCurrency) {
+    const newSecondCurrency = {
+      ...converter.secondCurrency,
+      ...secondCurrency,
+    };
+
+    const newFirstCurrencyValue = getConvertedValue(
+      newSecondCurrency.value,
+      currencyRates[newSecondCurrency.code],
+      currencyRates[converter.firstCurrency.code]
     );
+
+    if (isValidValue(newFirstCurrencyValue)) {
+      return {
+        firstCurrency: {
+          ...converter.firstCurrency,
+          value: newFirstCurrencyValue,
+        },
+        secondCurrency: { ...newSecondCurrency },
+      };
+    }
   }
 
-  return converterState;
+  return converter;
 }
 
-function getUpdatedFields(mainField, slaveField, rates) {
-  const { name: mainFieldName, content: mainFieldContent } = mainField;
-  const { name: slaveFieldName, content: slaveFieldContent } = slaveField;
-
-  const newFieldValue = getNewFieldValue(
-    mainFieldContent,
-    slaveFieldContent,
-    rates
-  );
-
-  return {
-    [mainFieldName]: { ...mainFieldContent },
-    [slaveFieldName]: {
-      value: newFieldValue,
-      currency: slaveFieldContent.currency,
-    },
-  };
+function isValidValue(value: typeof NaN | null | number) {
+  return !(isNaN(value) || value === null);
 }
 
-function getNewFieldValue(
-  from: ICurrencyConverterRecord,
-  to: ICurrencyConverterRecord,
-  rates: IApiRequestResult["rates"]
-) {
-  const { value: value1, currency: currency1 } = from;
-  const { currency: currency2 } = to;
-  return parseFloat(
-    convertCurrency(value1, rates[currency1], rates[currency2]).toFixed(2)
-  );
-}
-
-function convertCurrency(
-  count: number,
-  baseFrom: number,
-  baseTo: number
-): number {
-  return (count / baseFrom) * baseTo;
+function getConvertedValue(amount: number, fromRate: number, toRate: number) {
+  return parseFloat(((amount / fromRate) * toRate).toFixed(2));
 }

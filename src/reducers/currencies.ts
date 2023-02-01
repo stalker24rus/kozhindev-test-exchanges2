@@ -13,13 +13,13 @@ import loadLocalStorage from "utils/loadLocalStorage";
 const defaultState = () => {
   return {
     converter: loadLocalStorage(LOCALSTORAGE_CONVERTER) || {
-      firstField: {
-        value: 1,
-        currency: "RUB",
+      firstCurrency: {
+        value: 0,
+        code: "RUB",
       },
-      secondField: {
-        value: 1,
-        currency: "USD",
+      secondCurrency: {
+        value: 0,
+        code: "USD",
       },
     },
     rates: {},

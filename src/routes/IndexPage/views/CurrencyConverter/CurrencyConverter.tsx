@@ -6,11 +6,15 @@ import { setCurrencyConverterData } from "actions/currencies";
 import Dashboard from "./views/Dashboard";
 
 import "./CurrencyConverter.scss";
+import { ICurrencyConverterItems } from "models";
 
 export default function CurrencyConverter(): JSX.Element {
   const bem = useBem("CurrencyConverter");
 
-  const { firstField, secondField } = useSelector(getConverterData);
+  const {
+    firstCurrency,
+    secondCurrency,
+  }: ICurrencyConverterItems = useSelector(getConverterData);
 
   const dispatch = useDispatch();
 
@@ -22,23 +26,25 @@ export default function CurrencyConverter(): JSX.Element {
       [dispatch]
     );
 
-  const memoFirstField = React.useMemo(() => firstField, [firstField]);
-  const memoSecondField = React.useMemo(() => secondField, [secondField]);
+  const memoFirstCurrency = React.useMemo(() => firstCurrency, [firstCurrency]);
+  const memoSecondCurrency = React.useMemo(() => secondCurrency, [
+    secondCurrency,
+  ]);
 
   return (
     <div className={bem.block()}>
       <div className={bem.element("title")}>КОНВЕРТЕР ВАЛЮТ</div>
       <div className={bem.element("body")}>
         <Dashboard
-          record={memoFirstField}
-          onChange={bindOnChange("firstField")}
+          currency={memoFirstCurrency}
+          onChange={bindOnChange("firstCurrency")}
         />
 
         <div className={bem.element("arrow")}>&#8644;</div>
 
         <Dashboard
-          record={memoSecondField}
-          onChange={bindOnChange("secondField")}
+          currency={memoSecondCurrency}
+          onChange={bindOnChange("secondCurrency")}
         />
       </div>
     </div>

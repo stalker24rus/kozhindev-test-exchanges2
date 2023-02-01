@@ -9,6 +9,7 @@ import {
 } from "constants/currencies";
 import { getCurrencyRates } from "reducers/currencies";
 import getCurrencyTable from "utils/getCurrencyTable";
+import { ICurrencyTableRecord } from "models";
 
 import "./CurrencyTable.scss";
 
@@ -18,7 +19,7 @@ function CurrencyTable(): JSX.Element {
   const [expand, setExpand] = useState(false);
 
   const rates = useSelector(getCurrencyRates);
-  const sourceTable =
+  const sourceTable: ICurrencyTableRecord[] =
     React.useMemo(() => getCurrencyTable(rates), [rates]) || [];
 
   const handleExpand = React.useCallback(() => {

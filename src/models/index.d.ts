@@ -1,10 +1,7 @@
 export interface ICurrencyTableRecord {
   code: string;
   name: string;
-  roubleExchangeRate: number;
-  usaExchangeRate: number;
-  euroExchangeRate: number;
-  yuanExchangeRate: number;
+  [key: string]: string;
 }
 
 export interface ICurrencyConverterItems {

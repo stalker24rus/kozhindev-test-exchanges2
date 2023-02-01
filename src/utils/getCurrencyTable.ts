@@ -7,7 +7,7 @@ import { IApiRequestResult, ICurrencyTableRecord } from "models";
 export default function getCurrencyTable(
   rates: IApiRequestResult["rates"]
 ): ICurrencyTableRecord[] {
-  const table = [];
+  const table: ICurrencyTableRecord[] = [];
 
   for (const rowBaseCurrency in rates) {
     table.push({
